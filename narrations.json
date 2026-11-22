@@ -1,0 +1,231 @@
+{
+  "voice": "Augustin",
+  "model": "hf://gradium/phonon-40m-fr",
+  "count": 28,
+  "items": [
+    {
+      "sequence": "seq-1",
+      "cue": "c1",
+      "label": "Phase 1 · Placement initial",
+      "text": "Le 2-4-1 organise nos huit joueurs : un gardien, deux défenseurs centraux, quatre milieux avec deux axiaux et deux excentrés, et un attaquant. Ce n’est qu’un point de départ.",
+      "file": "audio/e9a9008f54f9df5fbf1ef8400e14fd6d6d8e88f5f5b457cbe875fd5a869301c8.wav",
+      "sha256key": "e9a9008f54f9df5fbf1ef8400e14fd6d6d8e88f5f5b457cbe875fd5a869301c8"
+    },
+    {
+      "sequence": "seq-1",
+      "cue": "c2",
+      "label": "Phase 2 · Découpage Z1 / Z2 / Z3",
+      "text": "Pour parler le même langage, on divise le terrain en trois zones : Z1 devant notre but, Z2 la zone médiane d’environ vingt mètres, et Z3 la moitié de terrain adverse.",
+      "file": "audio/ffa63f9c83bb97c64dca688fe3ca568fb8034a3d4cf1fba8601246461c2fe894.wav",
+      "sha256key": "ffa63f9c83bb97c64dca688fe3ca568fb8034a3d4cf1fba8601246461c2fe894"
+    },
+    {
+      "sequence": "seq-1",
+      "cue": "c3",
+      "label": "Phase 3 · Faire vivre le bloc",
+      "text": "Dès que le ballon bouge, les milieux excentrés ouvrent la largeur et toute l’équipe coulisse ensemble pour offrir plusieurs solutions au porteur.",
+      "file": "audio/ba9c5e89f59ef49b87d19939aebb747aa4e3e710dc19696dfe4d0a32ab0e9a86.wav",
+      "sha256key": "ba9c5e89f59ef49b87d19939aebb747aa4e3e710dc19696dfe4d0a32ab0e9a86"
+    },
+    {
+      "sequence": "seq-2",
+      "cue": "c1",
+      "label": "Phase 1 · Repère distance & écartement",
+      "text": "Défensivement, la distance minimale entre nos deux centraux correspond à la largeur du but à sept. Dès que le gardien a le ballon, DG et DD s’écartent pour ouvrir des angles de relance.",
+      "file": "audio/d18556201bb81cdc713881f8cd82bef1de4f5f8cac5d3f9153b0dff39891eacd.wav",
+      "sha256key": "d18556201bb81cdc713881f8cd82bef1de4f5f8cac5d3f9153b0dff39891eacd"
+    },
+    {
+      "sequence": "seq-2",
+      "cue": "c2",
+      "label": "Phase 2 · Choix court ou côté",
+      "text": "Les excentrés donnent la largeur sur les lignes pendant que le milieu six se rapproche dans l’intervalle. Le gardien relance proprement sur le défenseur droit face au jeu.",
+      "file": "audio/0de03d01be4a9927a9c36a0aaf7192052b05baf65b3d03078817e42cdfd96dd1.wav",
+      "sha256key": "0de03d01be4a9927a9c36a0aaf7192052b05baf65b3d03078817e42cdfd96dd1"
+    },
+    {
+      "sequence": "seq-2",
+      "cue": "c3",
+      "label": "Phase 3 · Une passe, un déplacement",
+      "text": "Le défenseur droit trouve le six entre les deux premiers attaquants adverses, puis poursuit sa course pour rester disponible. Une passe, un déplacement, une nouvelle solution.",
+      "file": "audio/157eca46322fe9de871ef2fee10375135b9a242dfd16efa1cc92955ec8e4f63e.wav",
+      "sha256key": "157eca46322fe9de871ef2fee10375135b9a242dfd16efa1cc92955ec8e4f63e"
+    },
+    {
+      "sequence": "seq-3",
+      "cue": "c1",
+      "label": "Phase 1 · Sortie du 1er défenseur",
+      "text": "Quand le ballon arrive dans le couloir adverse, le joueur le plus proche sort immédiatement cadrer le porteur sur sa prise de balle, en orientant son corps de profil.",
+      "file": "audio/e15c8ea517f632a2663ebf0de35e66bea9bd70942d28b167ae4898bdf49a7776.wav",
+      "sha256key": "e15c8ea517f632a2663ebf0de35e66bea9bd70942d28b167ae4898bdf49a7776"
+    },
+    {
+      "sequence": "seq-3",
+      "cue": "c2",
+      "label": "Phase 2 · Couverture légèrement derrière",
+      "text": "Derrière lui, le défenseur droit et le six ne restent jamais sur la même ligne : ils se placent légèrement derrière, en couverture, avec vision périphérique sur le ballon, l’adversaire et le partenaire.",
+      "file": "audio/6b96dcd1c786c54c90d2171b997176f59e696a342d9f6f7785e08a73e7fcb29b.wav",
+      "sha256key": "6b96dcd1c786c54c90d2171b997176f59e696a342d9f6f7785e08a73e7fcb29b"
+    },
+    {
+      "sequence": "seq-3",
+      "cue": "c3",
+      "label": "Phase 3 · Triangle défensif fermé",
+      "text": "L’attaquant ferme la passe en retrait et le six verrouille l’intérieur. Le triangle défensif oblige l’adversaire à jouer sur le côté ou vers l’arrière.",
+      "file": "audio/96a6bcd2c4f2fe4e5771876ec2ca6f690830f41d3fc4d32cf437e00f8e489e71.wav",
+      "sha256key": "96a6bcd2c4f2fe4e5771876ec2ca6f690830f41d3fc4d32cf437e00f8e489e71"
+    },
+    {
+      "sequence": "seq-4",
+      "cue": "c1",
+      "label": "Phase 1 · Bloc compact sur 3/4 côté droit",
+      "text": "Lorsque l’adversaire porte le ballon à droite, tout notre bloc coulisse pour occuper les trois quarts du terrain. À l’opposé, le milieu gauche reste à hauteur entre milieu et attaquant pour garder une menace de contre.",
+      "file": "audio/129e37be3eab230ea796661bb9b7f5be7b250a866d42f78fbd05dd1f36b39416.wav",
+      "sha256key": "129e37be3eab230ea796661bb9b7f5be7b250a866d42f78fbd05dd1f36b39416"
+    },
+    {
+      "sequence": "seq-4",
+      "cue": "c2",
+      "label": "Phase 2 · Coulissement collectif à la bascule",
+      "text": "Si l’adversaire renverse vers notre gauche, les huit joueurs coulissent en même temps pour fermer le nouveau couloir fort et protéger l’axe central.",
+      "file": "audio/368d9c913df9c10a9d7a3713a58ec305aa6f3e68f5eab96586585f0431c49edf.wav",
+      "sha256key": "368d9c913df9c10a9d7a3713a58ec305aa6f3e68f5eab96586585f0431c49edf"
+    },
+    {
+      "sequence": "seq-4",
+      "cue": "c3",
+      "label": "Phase 3 · Alignement défensif en Z1",
+      "text": "Si l’adversaire progresse jusque devant notre ligne défensive en Z1, l’excentré opposé descend à hauteur des défenseurs centraux pour fermer le second poteau.",
+      "file": "audio/416c67a16f9be8c6ea78e83cd96f1e3b8c42934e047243756858d8c296f8d3d8.wav",
+      "sha256key": "416c67a16f9be8c6ea78e83cd96f1e3b8c42934e047243756858d8c296f8d3d8"
+    },
+    {
+      "sequence": "seq-5",
+      "cue": "c1",
+      "label": "Phase 1 · Fixer en triangle côté droit",
+      "text": "En phase offensive, le 2-4-1 crée des triangles autour du porteur. Le défenseur droit fixe puis trouve l’excentré droit pour attirer le bloc adverse dans ce couloir.",
+      "file": "audio/1799f0c2ba3f40eb52934c4cf1b0bcccc603e84620ec9f89c9f4e18c93954a51.wav",
+      "sha256key": "1799f0c2ba3f40eb52934c4cf1b0bcccc603e84620ec9f89c9f4e18c93954a51"
+    },
+    {
+      "sequence": "seq-5",
+      "cue": "c2",
+      "label": "Phase 2 · Ressortir et renverser",
+      "text": "Dès que le couloir est fermé, l’excentré ressort sur le six en soutien qui renverse rapidement vers l’espace libéré pour le milieu gauche lancé.",
+      "file": "audio/6ac84a31292ca541de0b90ee86dba033bd46fa94339c9e86be2604cf56bed18a.wav",
+      "sha256key": "6ac84a31292ca541de0b90ee86dba033bd46fa94339c9e86be2604cf56bed18a"
+    },
+    {
+      "sequence": "seq-5",
+      "cue": "c3",
+      "label": "Phase 3 · Projection & Équilibre 2+1",
+      "text": "Le milieu huit se projette vers l’attaquant pour combiner à trois, tandis que le six et nos deux centraux assurent l’équilibre deux plus un derrière l’action.",
+      "file": "audio/05e1e7143410e3dde065d224ebe68abdd381d657cbf8302164b1539a3fbb8b09.wav",
+      "sha256key": "05e1e7143410e3dde065d224ebe68abdd381d657cbf8302164b1539a3fbb8b09"
+    },
+    {
+      "sequence": "seq-6",
+      "cue": "c1",
+      "label": "Phase 1 · Déclenchement côté droit en Z3",
+      "text": "Dès que notre excentré droit prend le couloir en Z3 avec la possibilité de centrer, le déclenchement devant le but s’organise à trois.",
+      "file": "audio/43eae3c33866d4e368b071950cfd3208e80662c23f368740330675878dde822f.wav",
+      "sha256key": "43eae3c33866d4e368b071950cfd3208e80662c23f368740330675878dde822f"
+    },
+    {
+      "sequence": "seq-6",
+      "cue": "c2",
+      "label": "Phase 2 · Deux devant, un en retrait",
+      "text": "L’attaquant croise au premier poteau, l’excentré opposé rentre à l’intérieur vers le deuxième poteau, et le milieu huit arrive en retrait pour former le triangle d’attaque à trois.",
+      "file": "audio/ad168fae0d87a6010368148dd11b2402e43d362dd31c314da3d6659b34b80f79.wav",
+      "sha256key": "ad168fae0d87a6010368148dd11b2402e43d362dd31c314da3d6659b34b80f79"
+    },
+    {
+      "sequence": "seq-6",
+      "cue": "c3",
+      "label": "Phase 3 · Finition & Couverture arrière",
+      "text": "Peu importe qui occupe chaque pointe du triangle : l’essentiel est d’avoir deux présences dans les six mètres, un retrait pour les ballons repoussés, et nos trois joueurs derrière pour sécuriser.",
+      "file": "audio/d635300cf10d744ea67ab005978aa142e90c9d34027e494720f71701ad0c48b9.wav",
+      "sha256key": "d635300cf10d744ea67ab005978aa142e90c9d34027e494720f71701ad0c48b9"
+    },
+    {
+      "sequence": "seq-7",
+      "cue": "c1",
+      "label": "É · Élargir au maximum",
+      "text": "À la récupération du ballon par le six, c’est l’ÉLAN ! E comme Élargir au maximum : nos excentrés ouvrent les couloirs et nos défenseurs s’écartent immédiatement.",
+      "file": "audio/3e2e2fdd842d43a098ec0db8a941bec6b20b3c0039f17d2e8a06c5e103d7384f.wav",
+      "sha256key": "3e2e2fdd842d43a098ec0db8a941bec6b20b3c0039f17d2e8a06c5e103d7384f"
+    },
+    {
+      "sequence": "seq-7",
+      "cue": "c2",
+      "label": "L · Libérer le ballon au bon moment",
+      "text": "L comme Libérer le ballon au bon moment : on sort de la densité adverse par une passe propre vers le côté ouvert.",
+      "file": "audio/7a5799bfd4258f2461ecdda9ad38c5e59704004f897619eb61f8c38ef6fa4ed5.wav",
+      "sha256key": "7a5799bfd4258f2461ecdda9ad38c5e59704004f897619eb61f8c38ef6fa4ed5"
+    },
+    {
+      "sequence": "seq-7",
+      "cue": "c3",
+      "label": "A · Avancer et progresser",
+      "text": "A comme Avancer et progresser : on trouve le huit entre les lignes qui se retourne pour lancer l’attaquant dans la profondeur.",
+      "file": "audio/fa084842681bdeca6b367eeb60631a2c2c195c8dc179bca6fc8132506289cc23.wav",
+      "sha256key": "fa084842681bdeca6b367eeb60631a2c2c195c8dc179bca6fc8132506289cc23"
+    },
+    {
+      "sequence": "seq-7",
+      "cue": "c4",
+      "label": "N · Ne pas s’enfermer",
+      "text": "N comme Ne pas s’enfermer : le bloc garde toujours une solution en soutien et le côté opposé disponible pour renverser si besoin.",
+      "file": "audio/86d438025cc553d851949f2385949f6f5edf40e3bd9e811aaa88fff4eb1965ff.wav",
+      "sha256key": "86d438025cc553d851949f2385949f6f5edf40e3bd9e811aaa88fff4eb1965ff"
+    },
+    {
+      "sequence": "seq-8",
+      "cue": "c1",
+      "label": "S · Se resserrer immédiatement",
+      "text": "Perte de balle ! C’est le signal STOP. S comme Se resserrer immédiatement : tout le monde se rapproche du ballon au lieu de regarder l’action.",
+      "file": "audio/6699e2c364516960e4d808b1db0091443aa4a28916fde9197284f2df10c3356d.wav",
+      "sha256key": "6699e2c364516960e4d808b1db0091443aa4a28916fde9197284f2df10c3356d"
+    },
+    {
+      "sequence": "seq-8",
+      "cue": "c2",
+      "label": "T & O · 3 secondes de pressing & Couper les passes",
+      "text": "T comme Trois secondes de pressing : le joueur le plus proche monte cadrer pendant que ses partenaires coupent les lignes de passe — O — pour tenter de récupérer tout de suite.",
+      "file": "audio/9fb1fbbb9b31a891481eb90431cb702411ecfb2f57206f35158187be74f1e050.wav",
+      "sha256key": "9fb1fbbb9b31a891481eb90431cb702411ecfb2f57206f35158187be74f1e050"
+    },
+    {
+      "sequence": "seq-8",
+      "cue": "c3",
+      "label": "P · Protéger l’axe en priorité",
+      "text": "P pour Protéger l’axe : si l’adversaire échappe au pressing après trois secondes, on ne se jette plus, tout le bloc se replace compact dans l’axe.",
+      "file": "audio/dfd3c3afaead14a05e74df4a00b630931c953b2d054e08a656b2191e4ced4c9d.wav",
+      "sha256key": "dfd3c3afaead14a05e74df4a00b630931c953b2d054e08a656b2191e4ced4c9d"
+    },
+    {
+      "sequence": "seq-9",
+      "cue": "c1",
+      "label": "Phase 1 · Règle de 4 & Départ en Carré",
+      "text": "Sur touche, on applique la règle pédagogique de quatre : se placer à quatre mètres du porteur, lui proposer quatre solutions et jouer en moins de quatre secondes. Quatre joueurs forment d’abord un carré.",
+      "file": "audio/306d17f1f0f0608edcd4f5c64cb076186cc1220d597b7fe9c128d903f881c6aa.wav",
+      "sha256key": "306d17f1f0f0608edcd4f5c64cb076186cc1220d597b7fe9c128d903f881c6aa"
+    },
+    {
+      "sequence": "seq-9",
+      "cue": "c2",
+      "label": "Phase 2 · Passage en Losange & Logique du Tiroir",
+      "text": "Par rotation horaire ou contre-horaire, le carré devient un losange : en logique de tiroir, l’attaquant plonge libérer un espace pendant que le huit vient proposer en soutien.",
+      "file": "audio/2e6acc4a7e6d11feb6fae4522d1ce0f42bd3785e43ec4c2869f4793fb87e7825.wav",
+      "sha256key": "2e6acc4a7e6d11feb6fae4522d1ce0f42bd3785e43ec4c2869f4793fb87e7825"
+    },
+    {
+      "sequence": "seq-9",
+      "cue": "c3",
+      "label": "Phase 3 · Relais & Rôle actif du gardien",
+      "text": "Si l’avant est bloqué, on peut aussi jouer en sécurité sur le défenseur droit et utiliser le rôle actif du gardien pour ressortir vers le côté opposé.",
+      "file": "audio/9b4786e8b366a00ce9966ad643f3a0834efb99d8da80f26e10fd5aed4ba77aee.wav",
+      "sha256key": "9b4786e8b366a00ce9966ad643f3a0834efb99d8da80f26e10fd5aed4ba77aee"
+    }
+  ]
+}

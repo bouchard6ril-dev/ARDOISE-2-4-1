@@ -1,0 +1,3438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Ardoise 2-4-1">
+  <meta name="theme-color" content="#0c1214">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icon-180.png">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="aurora">
+  <title>Ardoise Vidéo-Tactique 2-4-1 — Formation Éducateurs U12/U13</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+
+      /* Aurora palette */
+      --background: #0c1214;
+      --surface-container-low: #111a1e;
+      --surface-container: #152024;
+      --surface-container-high: #1c2a30;
+
+      --on-surface: #edf3f5;
+      --on-surface-variant: #94a8b0;
+
+      --outline: #38515c;
+      --outline-variant: #213138;
+
+      --primary: #63c7d6;
+      --on-primary: #081214;
+      --primary-container: #163840;
+      --on-primary-container: #c7f0f7;
+      --secondary: #5d7882;
+      --tertiary: #87d69b;
+      --error: #f27474;
+      --on-error: #1a0606;
+
+      --data-1: #63c7d6;
+      --data-2: #87d69b;
+      --data-3: #e8b954;
+      --data-4: #f08c70;
+      --data-context: #415861;
+
+      /* Shared foundation tokens */
+      --positive: #87d69b;
+      --warning: #e8b954;
+      --focus: #63c7d6;
+
+      --font-headline: 'Instrument Sans', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-label: 'Geist Mono', monospace;
+
+      --display-size: clamp(1.5rem, 1.25rem + 1vw, 2.05rem);
+      --headline-size: clamp(1.125rem, 1.02rem + 0.45vw, 1.375rem);
+      --subhead-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.12vw, 1rem);
+      --label-size: 0.75rem;
+
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      --rounded: 0.5rem;
+      --rounded-lg: 0.75rem;
+      --rounded-full: 9999px;
+
+      --hairline: 1px solid var(--outline-variant);
+      --hairline-strong: 1px solid var(--outline);
+      --panel-gradient: linear-gradient(180deg, #162226 0%, #111a1e 100%);
+      --heading-tracking: -0.025em;
+      --label-tracking: 0.06em;
+      --sage-tint: color-mix(in srgb, var(--tertiary) 13%, transparent);
+      --cyan-tint: color-mix(in srgb, var(--primary) 13%, transparent);
+      --amber-tint: color-mix(in srgb, var(--warning) 14%, transparent);
+      --coral-tint: color-mix(in srgb, var(--data-4) 14%, transparent);
+
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+
+      /* Tactical pitch tokens */
+      --pitch-turf: #10211d;
+      --pitch-stripe: #132722;
+      --pitch-line: rgba(237, 243, 245, 0.32);
+      --pitch-line-strong: rgba(237, 243, 245, 0.56);
+      --pitch-z1: rgba(99, 199, 214, 0.07);
+      --pitch-z2: rgba(135, 214, 155, 0.06);
+      --pitch-z3: rgba(232, 185, 84, 0.07);
+      --token-gk: #e8b954;
+      --token-gk-ink: #0c1214;
+      --token-team: #63c7d6;
+      --token-team-ink: #081214;
+      --token-opp: #f08c70;
+      --token-opp-ink: #1a0b07;
+      --ball-fill: #edf3f5;
+      --ball-stroke: #0c1214;
+      --vector-pass: #63c7d6;
+      --vector-run: #87d69b;
+      --vector-press: #f08c70;
+      --vector-warn: #e8b954;
+      --zone-fill-sage: rgba(135, 214, 155, 0.14);
+      --zone-fill-cyan: rgba(99, 199, 214, 0.14);
+      --zone-fill-coral: rgba(240, 140, 112, 0.16);
+      --zone-fill-amber: rgba(232, 185, 84, 0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1320px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Header */
+    .app-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: end;
+      padding-bottom: var(--space-md);
+      border-bottom: var(--hairline);
+    }
+    .header-title {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 600;
+      letter-spacing: var(--heading-tracking);
+      line-height: 1.08;
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--on-surface);
+    }
+    .header-lede {
+      margin: 0;
+      color: var(--on-surface-variant);
+      max-width: 62ch;
+      font-size: var(--body-size);
+    }
+    .header-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .metric-tile {
+      background: var(--panel-gradient);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .data-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 500;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+      display: block;
+    }
+    .metric-value {
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: var(--heading-tracking);
+      color: var(--on-surface);
+      margin-top: 2px;
+      display: block;
+    }
+    .metric-sub {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      display: block;
+    }
+
+    /* Sequence selector strip */
+    .sequence-strip-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .strip-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .sequence-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: var(--space-sm);
+    }
+    .seq-card {
+      text-align: left;
+      background: var(--surface-container);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .seq-card:hover {
+      background: var(--surface-container-high);
+      border-color: var(--outline);
+    }
+    .seq-card[aria-current="true"] {
+      background: var(--primary-container);
+      border-color: var(--primary);
+      box-shadow: inset 3px 0 0 var(--primary);
+    }
+    .seq-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .seq-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .seq-card[aria-current="true"] .seq-num {
+      color: var(--on-primary-container);
+    }
+    .seq-status-dot {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: var(--rounded);
+      background: var(--background);
+      color: var(--on-surface-variant);
+      border: var(--hairline);
+    }
+    .seq-status-dot.mastered {
+      background: var(--sage-tint);
+      color: var(--tertiary);
+      border-color: color-mix(in srgb, var(--tertiary) 40%, transparent);
+    }
+    .seq-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--on-surface);
+    }
+    .seq-cat {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Main Workspace Grid */
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel-gradient);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+
+    /* Left Column: Tactical Video Player */
+    .player-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .player-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .player-title {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 600;
+      letter-spacing: var(--heading-tracking);
+      margin: 2px 0 0 0;
+      line-height: 1.15;
+    }
+    .overlay-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .toggle-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 4px var(--space-sm);
+      border-radius: var(--rounded);
+      border: var(--hairline-strong);
+      background: var(--background);
+      color: var(--on-surface-variant);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .toggle-chip:hover {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+    .toggle-chip[aria-pressed="true"] {
+      background: var(--cyan-tint);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    .toggle-chip.mode-free[aria-pressed="true"] {
+      background: var(--amber-tint);
+      color: var(--warning);
+      border-color: var(--warning);
+    }
+
+    /* Pitch Canvas Wrapper */
+    .pitch-stage {
+      position: relative;
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      overflow: hidden;
+      min-height: 300px;
+    }
+    .pitch-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 900 / 540;
+      user-select: none;
+      touch-action: none;
+    }
+    .token-group {
+      cursor: pointer;
+      transition: filter var(--dur-micro) var(--ease-out);
+    }
+    .token-group.draggable {
+      cursor: grab;
+    }
+    .token-group.draggable:active {
+      cursor: grabbing;
+    }
+    .token-group:hover .token-circle {
+      filter: brightness(1.12);
+    }
+    .token-label {
+      font-family: var(--font-label);
+      font-size: 13px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+    .opp-label {
+      font-family: var(--font-label);
+      font-size: 11px;
+      font-weight: 600;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+    .pitch-badge-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding: var(--space-xs) var(--space-md);
+      background: var(--surface-container-low);
+      border-top: var(--hairline);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+    .legend-inline {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+    }
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--rounded-full);
+      display: inline-block;
+    }
+    .swatch-team { background: var(--token-team); }
+    .swatch-gk { background: var(--token-gk); }
+    .swatch-opp { background: var(--token-opp); }
+
+    /* Teleprompter / Live Subtitles */
+    .subtitle-well {
+      background: var(--background);
+      border: var(--hairline);
+      border-left: 3px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .subtitle-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .voice-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+      border: var(--hairline);
+    }
+    .voice-status-badge.speaking {
+      background: var(--sage-tint);
+      color: var(--tertiary);
+      border-color: color-mix(in srgb, var(--tertiary) 40%, transparent);
+    }
+    .subtitle-text {
+      margin: 0;
+      font-size: 0.96rem;
+      color: var(--on-surface);
+      line-height: 1.5;
+      min-height: 3em;
+    }
+
+    /* Video Transport Controls */
+    .transport-well {
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .scrubber-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .scrubber-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .scrubber-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+      letter-spacing: var(--label-tracking);
+    }
+    .timecode {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-variant-numeric: tabular-nums;
+      color: var(--primary);
+    }
+    .timeline-range {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+      height: 8px;
+      margin: 0;
+    }
+    .cue-ticks {
+      display: grid;
+      gap: 4px;
+    }
+    .cue-tick-btn {
+      background: var(--surface-container);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: 4px 8px;
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .cue-tick-btn:hover {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+    .cue-tick-btn.active {
+      background: var(--cyan-tint);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .controls-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: var(--space-sm);
+    }
+    .field-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field-label {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: var(--label-tracking);
+      color: var(--on-surface-variant);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      border: var(--hairline-strong);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .btn:hover:not(:disabled) {
+      background: var(--surface-container-high);
+      border-color: var(--primary);
+    }
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--primary) 86%, var(--on-surface));
+      border-color: var(--primary);
+    }
+    .btn-active {
+      background: var(--sage-tint);
+      color: var(--tertiary);
+      border-color: color-mix(in srgb, var(--tertiary) 55%, transparent);
+    }
+    .select-input {
+      min-height: 44px;
+      padding: 0 var(--space-lg) 0 var(--space-sm);
+      border-radius: var(--rounded);
+      border: var(--hairline-strong);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-family: var(--font-label);
+      font-size: 0.8125rem;
+      cursor: pointer;
+    }
+    .select-input:hover {
+      border-color: var(--primary);
+    }
+
+    /* Right Column: Tactical Dossier & Verbatims */
+    .dossier-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .dossier-nav {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-xs);
+      background: var(--background);
+      padding: 4px;
+      border-radius: var(--rounded);
+      border: var(--hairline);
+    }
+    .dossier-tab {
+      min-height: 40px;
+      border: none;
+      border-radius: calc(var(--rounded) - 2px);
+      background: transparent;
+      color: var(--on-surface-variant);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      padding: 4px var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .dossier-tab:hover {
+      color: var(--on-surface);
+    }
+    .dossier-tab[aria-selected="true"] {
+      background: var(--surface-container-high);
+      color: var(--primary);
+      box-shadow: inset 0 -2px 0 var(--primary);
+    }
+
+    .dossier-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .dossier-section[hidden] {
+      display: none;
+    }
+
+    .objective-box {
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .objective-box p {
+      margin: 4px 0 0 0;
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+    }
+
+    /* Timeline Cues List */
+    .cue-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .cue-item {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .cue-item:hover {
+      background: var(--surface-container-high);
+    }
+    .cue-item.active {
+      background: var(--cyan-tint);
+      border-color: var(--primary);
+    }
+    .cue-item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: 4px;
+    }
+    .cue-phase {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .cue-time {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+    .cue-speech {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--on-surface);
+      line-height: 1.45;
+    }
+
+    /* Coach Verbatims & FAST */
+    .verbatim-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .verbatim-card {
+      background: var(--background);
+      border: var(--hairline);
+      border-left: 3px solid var(--tertiary);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .verbatim-quote {
+      margin: 0 0 4px 0;
+      font-size: 0.92rem;
+      color: var(--on-surface);
+      font-style: italic;
+    }
+    .verbatim-origin {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      color: var(--tertiary);
+    }
+
+    .keypoints-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--on-surface-variant);
+      font-size: 0.9rem;
+    }
+    .keypoints-list strong {
+      color: var(--on-surface);
+    }
+    .nuance-box {
+      background: var(--amber-tint);
+      border: 1px solid color-mix(in srgb, var(--warning) 35%, transparent);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.875rem;
+      color: var(--on-surface);
+    }
+    .nuance-box strong {
+      color: var(--warning);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Role Inspector */
+    .token-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-xs);
+    }
+    .role-pill-btn {
+      min-height: 44px;
+      border-radius: var(--rounded);
+      border: var(--hairline-strong);
+      background: var(--background);
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .role-pill-btn:hover {
+      background: var(--surface-container-high);
+    }
+    .role-pill-btn[aria-pressed="true"] {
+      background: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+    }
+    .role-detail-card {
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .role-detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .role-detail-title {
+      font-family: var(--font-headline);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .role-grid-phases {
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .role-phase-block {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-sm);
+    }
+    .role-phase-block p {
+      margin: 4px 0 0 0;
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Coach Notebook & Mastery */
+    .mastery-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      flex-wrap: wrap;
+    }
+    .notes-textarea {
+      width: 100%;
+      min-height: 110px;
+      background: var(--background);
+      border: var(--hairline-strong);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      resize: vertical;
+    }
+    .save-feedback {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      min-height: 1.2em;
+    }
+
+    /* Reference Section: ELAN / STOP & Sources */
+    .reference-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .mnemonic-card {
+      background: var(--panel-gradient);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .mnemonic-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+    }
+    .mnemonic-title {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 600;
+      margin: 0;
+    }
+    .status-chip {
+      background: var(--sage-tint);
+      color: var(--tertiary);
+      border: 1px solid color-mix(in srgb, var(--tertiary) 35%, transparent);
+      border-radius: var(--rounded);
+      padding: 2px var(--space-sm);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+    }
+    .status-chip.coral {
+      background: var(--coral-tint);
+      color: var(--data-4);
+      border-color: color-mix(in srgb, var(--data-4) 35%, transparent);
+    }
+    .acronym-list {
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .acronym-row {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: var(--space-sm);
+      align-items: center;
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: 6px var(--space-sm);
+    }
+    .acronym-letter {
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+      color: var(--primary);
+      background: var(--cyan-tint);
+      border-radius: var(--rounded);
+      padding: 2px 0;
+    }
+    .acronym-row.stop .acronym-letter {
+      color: var(--data-4);
+      background: var(--coral-tint);
+    }
+    .acronym-desc strong {
+      display: block;
+      font-size: 0.9rem;
+    }
+    .acronym-desc span {
+      display: block;
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+    }
+
+    .sources-footer {
+      border-top: var(--hairline);
+      padding-top: var(--space-md);
+      font-size: 0.85rem;
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    @media (max-width: 980px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+      .app-header {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-sm);
+        gap: var(--space-md);
+      }
+      .panel {
+        padding: var(--space-md);
+      }
+      .header-metrics {
+        grid-template-columns: 1fr;
+      }
+      .sequence-strip {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+      .token-selector-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    /* iOS : commandes accessibles et tactiles pendant lecture */
+    .controls-row button, .controls-row select { min-height: 44px; touch-action: manipulation; }
+    #timeline-scrubber { touch-action: pan-y; }
+  </style>
+</head>
+<body>
+  <div class="page-grid">
+    <!-- Header -->
+    <header class="app-header">
+      <div>
+        <span class="data-label">Football à 8 · Catégorie U12/U13 · Formation d’éducateurs</span>
+        <h1 class="header-title">Ardoise Vidéo-Tactique 2-4-1</h1>
+        <p class="header-lede">
+          Module interactif d’animation collective : observez les déplacements directs des 8 postes (G, DD, DG, M6, M8, MG, MD, AT), écoutez la voix-off synchronisée et manipulez les repères Z1/Z2/Z3, ÉLAN/STOP et touches.
+        </p>
+      </div>
+      <div class="header-metrics">
+        <div class="metric-tile">
+          <span class="data-label">Progression</span>
+          <span class="metric-value" id="metric-mastered">0 / 9</span>
+          <span class="metric-sub">Séquences validées</span>
+        </div>
+        <div class="metric-tile">
+          <span class="data-label">Organisation</span>
+          <span class="metric-value">1-2-4-1</span>
+          <span class="metric-sub">8 joueurs · 3 zones</span>
+        </div>
+        <div class="metric-tile">
+          <span class="data-label">Audio FR</span>
+          <span class="metric-value" id="metric-voice-state">Prêt</span>
+          <span class="metric-sub">Augustin · 28 fichiers locaux</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sequence Playlist -->
+    <section class="sequence-strip-wrap" aria-label="Sélection des séquences tactiques">
+      <div class="strip-head">
+        <span class="data-label">Programme vidéo-tactique (9 séquences animées)</span>
+        <span class="data-label" id="active-seq-counter">Séquence 01 / 09</span>
+      </div>
+      <div class="sequence-strip" id="sequence-strip"></div>
+    </section>
+
+    <!-- Main Interactive Workspace -->
+    <main class="workspace">
+      <!-- Left: 2D Animated Pitch + Transport -->
+      <section class="panel player-panel" aria-label="Lecteur vidéo-tactique 2D">
+        <div class="player-head">
+          <div>
+            <span class="data-label" id="player-category">Organisation</span>
+            <h2 class="player-title" id="player-title">01. Structure 2-4-1 &amp; Découpage Z1 / Z2 / Z3</h2>
+          </div>
+          <div class="overlay-toolbar" role="group" aria-label="Calques tactiques">
+            <button type="button" class="toggle-chip" id="btn-layer-zones" aria-pressed="true" onclick="toggleLayer('zones')">Zones Z1/Z2/Z3</button>
+            <button type="button" class="toggle-chip" id="btn-layer-vectors" aria-pressed="true" onclick="toggleLayer('vectors')">Vecteurs &amp; Triangles</button>
+            <button type="button" class="toggle-chip" id="btn-layer-opponents" aria-pressed="true" onclick="toggleLayer('opponents')">Bloc adverse</button>
+            <button type="button" class="toggle-chip mode-free" id="btn-mode-free" aria-pressed="false" onclick="toggleFreeboard()">Ardoise libre</button>
+          </div>
+        </div>
+
+        <div class="pitch-stage">
+          <svg id="pitch-svg" class="pitch-svg" viewBox="0 0 900 540" role="img" aria-label="Terrain tactique 2-4-1 animé en 2D">
+            <defs>
+              <marker id="arrow-pass" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--vector-pass)"></path>
+              </marker>
+              <marker id="arrow-run" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--vector-run)"></path>
+              </marker>
+              <marker id="arrow-press" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--vector-press)"></path>
+              </marker>
+              <marker id="arrow-warn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1 L 10 5 L 0 9 z" fill="var(--vector-warn)"></path>
+              </marker>
+            </defs>
+
+            <!-- Turf stripes -->
+            <rect x="0" y="0" width="900" height="540" fill="var(--pitch-turf)"></rect>
+            <g id="turf-stripes" aria-hidden="true">
+              <rect x="50" y="45" width="100" height="450" fill="var(--pitch-stripe)"></rect>
+              <rect x="250" y="45" width="100" height="450" fill="var(--pitch-stripe)"></rect>
+              <rect x="450" y="45" width="100" height="450" fill="var(--pitch-stripe)"></rect>
+              <rect x="650" y="45" width="100" height="450" fill="var(--pitch-stripe)"></rect>
+            </g>
+
+            <!-- Z1 / Z2 / Z3 Layer -->
+            <g id="layer-zones" aria-hidden="true">
+              <rect x="50" y="45" width="267" height="450" fill="var(--pitch-z1)"></rect>
+              <rect x="317" y="45" width="266" height="450" fill="var(--pitch-z2)"></rect>
+              <rect x="583" y="45" width="267" height="450" fill="var(--pitch-z3)"></rect>
+              <line x1="317" y1="45" x2="317" y2="495" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.55"></line>
+              <line x1="583" y1="45" x2="583" y2="495" stroke="var(--warning)" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.55"></line>
+              <text x="183" y="31" text-anchor="middle" fill="var(--primary)" font-family="var(--font-label)" font-size="12" font-weight="600">Z1 · RELANCE / PROTECTION</text>
+              <text x="450" y="31" text-anchor="middle" fill="var(--tertiary)" font-family="var(--font-label)" font-size="12" font-weight="600">Z2 · MÉDIANE (~20 M)</text>
+              <text x="717" y="31" text-anchor="middle" fill="var(--warning)" font-family="var(--font-label)" font-size="12" font-weight="600">Z3 · DÉSÉQUILIBRE / FINITION</text>
+            </g>
+
+            <!-- Pitch Markings -->
+            <g id="pitch-lines" aria-hidden="true" fill="none" stroke="var(--pitch-line)" stroke-width="2">
+              <rect x="50" y="45" width="800" height="450" stroke="var(--pitch-line-strong)"></rect>
+              <line x1="450" y1="45" x2="450" y2="495"></line>
+              <circle cx="450" cy="270" r="64"></circle>
+              <circle cx="450" cy="270" r="3" fill="var(--pitch-line-strong)"></circle>
+              <!-- Left penalty box & 7-a-side goal -->
+              <rect x="50" y="145" width="125" height="250"></rect>
+              <rect x="50" y="205" width="44" height="130"></rect>
+              <rect x="34" y="232" width="16" height="76" stroke="var(--pitch-line-strong)" stroke-width="2.5"></rect>
+              <circle cx="136" cy="270" r="2.5" fill="var(--pitch-line-strong)"></circle>
+              <!-- Right penalty box & 7-a-side goal -->
+              <rect x="725" y="145" width="125" height="250"></rect>
+              <rect x="806" y="205" width="44" height="130"></rect>
+              <rect x="850" y="232" width="16" height="76" stroke="var(--pitch-line-strong)" stroke-width="2.5"></rect>
+              <circle cx="764" cy="270" r="2.5" fill="var(--pitch-line-strong)"></circle>
+              <!-- Direction arrow -->
+              <text x="842" y="518" text-anchor="end" fill="var(--on-surface-variant)" stroke="none" font-family="var(--font-label)" font-size="11">SENS D’ATTAQUE →</text>
+              <text x="54" y="518" text-anchor="start" fill="var(--on-surface-variant)" stroke="none" font-family="var(--font-label)" font-size="11">COULOIR GAUCHE (HAUT) / COULOIR DROIT (BAS)</text>
+            </g>
+
+            <!-- Dynamic Tactical Vectors & Geometric Overlays -->
+            <g id="layer-tactical-guides" aria-hidden="true"></g>
+
+            <!-- Opponents Layer -->
+            <g id="layer-opponents"></g>
+
+            <!-- Team 2-4-1 Tokens Layer -->
+            <g id="layer-team"></g>
+
+            <!-- Ball Layer -->
+            <g id="layer-ball" aria-hidden="true">
+              <circle id="ball-shadow" cx="95" cy="273" r="8" fill="var(--ball-stroke)" opacity="0.45"></circle>
+              <circle id="ball-circle" cx="95" cy="270" r="7.5" fill="var(--ball-fill)" stroke="var(--ball-stroke)" stroke-width="2"></circle>
+            </g>
+
+            <!-- Dynamic On-Pitch Callout Badge -->
+            <g id="layer-hud" aria-hidden="true"></g>
+          </svg>
+
+          <div class="pitch-badge-bar">
+            <div class="legend-inline">
+              <span class="legend-item"><span class="swatch swatch-gk"></span> G (Gardien)</span>
+              <span class="legend-item"><span class="swatch swatch-team"></span> 2-4-1 (DD, DG, M6, M8, MG, MD, AT)</span>
+              <span class="legend-item"><span class="swatch swatch-opp"></span> Adversaire</span>
+            </div>
+            <div id="freeboard-actions" hidden>
+              <button type="button" class="toggle-chip" onclick="resetFreeboard()">Réinitialiser ardoise</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Voice-Over Subtitle / Teleprompter -->
+        <div class="subtitle-well" aria-live="polite">
+          <div class="subtitle-meta">
+            <span class="data-label" id="subtitle-phase-label">Phase 1 · Voix-off pédagogique</span>
+            <span class="voice-status-badge" id="voice-status-badge">Voix-off prête</span>
+          </div>
+          <p class="subtitle-text" id="subtitle-text">Appuyez sur Lecture pour démarrer l’animation et la narration vocale synchronisée.</p>
+        </div>
+
+        <!-- Interactive Video Player Controls -->
+        <div class="transport-well">
+          <div class="scrubber-row">
+            <div class="scrubber-top">
+              <label for="timeline-scrubber" class="scrubber-label">Ligne temporelle de la séquence</label>
+              <span class="timecode" id="timecode-display">00:00 / 00:21</span>
+            </div>
+            <input type="range" id="timeline-scrubber" class="timeline-range" min="0" max="1000" value="0" oninput="onScrubInput(this.value)">
+            <div class="cue-ticks" id="cue-ticks"></div>
+          </div>
+
+          <div class="controls-row">
+            <div class="controls-group">
+              <button type="button" class="btn" id="btn-prev" onclick="prevSequence()" aria-label="Séquence précédente">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="19 20 9 12 19 4 19 20"></polygon><line x1="5" y1="19" x2="5" y2="5"></line></svg>
+                Précédent
+              </button>
+              <button type="button" class="btn btn-primary" id="btn-play-pause" onclick="togglePlayPause()">
+                <svg id="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <svg id="icon-pause" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                <span id="play-label">Lecture</span>
+              </button>
+              <button type="button" class="btn" id="btn-next" onclick="nextSequence()" aria-label="Séquence suivante">
+                Suivant
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"></polygon><line x1="19" y1="5" x2="19" y2="19"></line></svg>
+              </button>
+            </div>
+
+            <div class="controls-group">
+              <div class="field-stack">
+                <label for="speed-select" class="field-label">Vitesse</label>
+                <select id="speed-select" class="select-input" onchange="setPlaybackSpeed(this.value)">
+                  <option value="0.5">0.5×</option>
+                  <option value="0.75">0.75×</option>
+                  <option value="1" selected>1.0×</option>
+                  <option value="1.25">1.25×</option>
+                  <option value="1.5">1.5×</option>
+                </select>
+              </div>
+
+              <button type="button" class="btn" id="btn-loop" aria-pressed="true" onclick="toggleLoop()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                <span id="loop-label">Boucle : Séq.</span>
+              </button>
+
+              <button type="button" class="btn btn-active" id="btn-voice" aria-pressed="true" onclick="toggleVoice()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                <span id="voice-label">Voix-off : ON</span>
+              </button>
+
+              <div class="field-stack" id="voice-select-wrap">
+                <label for="voice-select" class="field-label">Voix FR</label>
+                <select id="voice-select" class="select-input" onchange="setSelectedVoice(this.value)"></select>
+              </div>
+            </div>
+          </div>
+          <p id="offline-status" style="font-size:12px; margin:8px 2px 0; opacity:.85" role="status">Audio Augustin intégré · Installation hors connexion à vérifier</p>
+        </div>
+      </section>
+
+      <!-- Right: Tactical Explanations, Verbatims & Token Inspector -->
+      <aside class="panel dossier-panel" aria-label="Volet tactique et verbatims d’éducateur">
+        <div class="dossier-nav" role="tablist" aria-label="Volets d’analyse">
+          <button type="button" class="dossier-tab" role="tab" id="tab-tactics" aria-selected="true" onclick="switchDossierTab('tactics')">Tactique &amp; Verbatims</button>
+          <button type="button" class="dossier-tab" role="tab" id="tab-roles" aria-selected="false" onclick="switchDossierTab('roles')">Rôles (G → AT)</button>
+          <button type="button" class="dossier-tab" role="tab" id="tab-notebook" aria-selected="false" onclick="switchDossierTab('notebook')">Carnet Éducateur</button>
+        </div>
+
+        <!-- Tab 1: Tactics, Live Voice Cues, Verbatims, FAST -->
+        <div id="panel-tactics" class="dossier-section" role="tabpanel" aria-labelledby="tab-tactics">
+          <div class="objective-box">
+            <span class="data-label">Intention pédagogique</span>
+            <p id="seq-objective"></p>
+          </div>
+
+          <div>
+            <span class="data-label" style="margin-bottom: 6px;">Narration temps réel (cliquez une phase pour y accéder)</span>
+            <div class="cue-list" id="cue-list"></div>
+          </div>
+
+          <div>
+            <span class="data-label" style="margin-bottom: 6px;">Verbatims d’éducateur &amp; Questions FAST</span>
+            <div class="verbatim-list" id="verbatim-list"></div>
+          </div>
+
+          <div>
+            <span class="data-label" style="margin-bottom: 6px;">Points de vigilance &amp; Nuances méthodologiques</span>
+            <ul class="keypoints-list" id="keypoints-list"></ul>
+          </div>
+
+          <div class="nuance-box" id="nuance-box"></div>
+        </div>
+
+        <!-- Tab 2: Interactive Player Role Inspector -->
+        <div id="panel-roles" class="dossier-section" role="tabpanel" aria-labelledby="tab-roles" hidden>
+          <div>
+            <span class="data-label" style="margin-bottom: 6px;">Sélectionner un poste (ou cliquez sur un jeton du terrain)</span>
+            <div class="token-selector-grid" id="role-selector-grid"></div>
+          </div>
+
+          <div class="role-detail-card" id="role-detail-card"></div>
+        </div>
+
+        <!-- Tab 3: Coach Session Tracker & Notes -->
+        <div id="panel-notebook" class="dossier-section" role="tabpanel" aria-labelledby="tab-notebook" hidden>
+          <div class="mastery-row">
+            <div>
+              <span class="data-label">Validation de la séquence</span>
+              <div id="mastery-seq-title" style="font-weight: 600; font-size: 0.92rem;"></div>
+            </div>
+            <button type="button" class="btn" id="btn-toggle-mastery" onclick="toggleCurrentMastery()">Marquer acquise</button>
+          </div>
+
+          <div class="field-stack">
+            <label for="coach-notes-input" class="field-label">Observations terrain pour cette séquence (U12/U13)</label>
+            <textarea id="coach-notes-input" class="notes-textarea" placeholder="Notez vos repères d’entraînement, joueurs à accompagner sur ce poste, ou adaptations terrain…" oninput="onCoachNotesInput(this.value)"></textarea>
+            <span class="save-feedback" id="notes-save-status"></span>
+          </div>
+
+          <div class="controls-group">
+            <button type="button" class="btn" onclick="exportSessionSummary()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Exporter fiche (.txt)
+            </button>
+            <button type="button" class="btn" id="btn-reset-progress" onclick="resetProgress(this)">Réinitialiser suivi</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Bottom Reference: ELAN / STOP & Sources -->
+    <section class="reference-grid" aria-label="Repères mnémotechniques ÉLAN et STOP">
+      <article class="mnemonic-card">
+        <div class="mnemonic-head">
+          <h2 class="mnemonic-title">ÉLAN — Avec le ballon</h2>
+          <span class="status-chip">Transition DEF → OFF</span>
+        </div>
+        <div class="acronym-list">
+          <div class="acronym-row"><span class="acronym-letter">É</span><div class="acronym-desc"><strong>Élargir au maximum</strong><span>MG et MD ouvrent la largeur, DG et DD s’écartent pour offrir des angles au porteur.</span></div></div>
+          <div class="acronym-row"><span class="acronym-letter">L</span><div class="acronym-desc"><strong>Libérer le ballon au bon moment</strong><span>Sortir de la zone de densité, prise d’info avant réception, passe puis déplacement.</span></div></div>
+          <div class="acronym-row"><span class="acronym-letter">A</span><div class="acronym-desc"><strong>Avancer et progresser</strong><span>Trouver M8 entre les lignes ou AT en appui/profondeur dès que le jeu s’ouvre.</span></div></div>
+          <div class="acronym-row"><span class="acronym-letter">N</span><div class="acronym-desc"><strong>Ne pas s’enfermer</strong><span>Conserver toujours une solution de soutien derrière le porteur et une sortie à l’opposé.</span></div></div>
+        </div>
+      </article>
+
+      <article class="mnemonic-card">
+        <div class="mnemonic-head">
+          <h2 class="mnemonic-title">STOP — À la perte du ballon</h2>
+          <span class="status-chip coral">Transition OFF → DEF</span>
+        </div>
+        <div class="acronym-list">
+          <div class="acronym-row stop"><span class="acronym-letter">S</span><div class="acronym-desc"><strong>Se resserrer immédiatement</strong><span>Réduire l’espace de jeu effectif autour du ballon plutôt que de rester dispersés.</span></div></div>
+          <div class="acronym-row stop"><span class="acronym-letter">T</span><div class="acronym-desc"><strong>Trois secondes de pressing</strong><span>Repère d’engagement club : le plus proche cadre si la couverture suit derrière lui.</span></div></div>
+          <div class="acronym-row stop"><span class="acronym-letter">O</span><div class="acronym-desc"><strong>On coupe les lignes de passe</strong><span>Orientation corporelle de profil et fermeture des intervalles intérieurs.</span></div></div>
+          <div class="acronym-row stop"><span class="acronym-letter">P</span><div class="acronym-desc"><strong>Protéger l’axe en priorité</strong><span>Si non-récupération après 3 s, bascule en bloc compact Z2/Z1 et coulissement sur 3/4.</span></div></div>
+        </div>
+      </article>
+    </section>
+
+    <footer class="sources-footer">
+      <span><strong>Sources &amp; Cadre méthodologique :</strong> Script vidéo 2-4-1 Saison 2026/27 (Élan Boucalais U13) · Didier Mari (« Animation défensive 2-4-1 » et « Animation offensive 2-4-1 » : repère but à 7, découpage Z1/Z2/Z3, couverture échelonnée, coulissement 3/4, 3 devant le but) · FFF GIFE U12/U13 (fiches 1/8 à 8/8 : touches règle de 4, tiroir, carré/losange, relance) · Notes CFI U10–U13 (méthode FAST, 3 espaces) · FIFA Training Centre (« Find your role on the pitch », « 8v8+1 Build and progress », « Defending as a unit », « Talent Coach 3.4 ») · Analyses Torofoot &amp; GafferBook · Corpus de référence 2-4-1.</span>
+      <span>Note : Les repères « ÉLAN / STOP » et « 3 secondes » sont des conventions pédagogiques du projet de jeu étudié, à adapter au niveau de maîtrise et au rapport d’opposition réel sur le terrain.</span>
+    </footer>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    const TOKEN_META = [
+      {
+        id: `G`,
+        name: `Gardien de but`,
+        line: `Dernier rempart & 1er relanceur`,
+        isGK: true,
+        withBall: `Se déplace en soutien derrière les centraux, offre deux angles de passe courts ou allonge si le pressing adverse ferme la Z1. Reste actif en soutien lors des touches basses ou médianes.`,
+        withoutBall: `Protège son but, gère la profondeur dans le dos de DD et DG, communique sur les déplacements de couverture.`,
+        cuePhrase: `Reste disponible dans l’axe du ballon pour offrir une porte de sortie propre.`
+      },
+      {
+        id: `DG`,
+        name: `Défenseur central gauche`,
+        line: `Base défensive & construction`,
+        isGK: false,
+        withBall: `S’écarte côté gauche à la relance sans s’aligner à plat avec DD ni lui couper la ligne de passe ; cherche la passe au sol vers l’avant ou conduit pour fixer le 1er rideau.`,
+        withoutBall: `Protège l’axe avec DD. Si DD sort cadrer, se place en couverture légèrement derrière. Respecte au minimum la largeur du but à 7 entre centraux.`,
+        cuePhrase: `Couvre l’intérieur et surveille la profondeur dès que ton partenaire sort.`
+      },
+      {
+        id: `DD`,
+        name: `Défenseur central droit`,
+        line: `Base défensive & construction`,
+        isGK: false,
+        withBall: `S’écarte côté droit pour ouvrir l’angle au gardien. Après sa passe vers M6 ou MD, poursuit son déplacement pour maintenir un soutien sûr.`,
+        withoutBall: `Se couvre mutuellement avec DG, empêche l’attaquant adverse de se retourner, ferme le demi-espace droit lorsque MD monte au pressing.`,
+        cuePhrase: `Écarte pour relancer, resserre dans l’axe dès qu’on perd le ballon.`
+      },
+      {
+        id: `M6`,
+        name: `Milieu défensif (Sentinelle)`,
+        line: `Connecteur de lignes & équilibre 2+1`,
+        isGK: false,
+        withBall: `Décroche dans l’intervalle entre les lignes adverses pour aider la sortie de balle, s’oriente sur le pied arrière et renverse le jeu vers le côté libre.`,
+        withoutBall: `Protège l’accès à l’axe en priorité, coupe les passes intérieures lorsque l’excentré presse et assure la couverture de l’équilibre 2+1 quand M8 se projette.`,
+        cuePhrase: `Prends l’information avant de recevoir et garde le lien entre défense et attaque.`
+      },
+      {
+        id: `M8`,
+        name: `Milieu offensif (Relayeur)`,
+        line: `Créateur entre les lignes`,
+        isGK: false,
+        withBall: `Se rend disponible entre les lignes adverses, combine en appui-soutien-3e joueur, et se projette en Z3 (notamment en retrait dans le triangle d’attaque à 3).`,
+        withoutBall: `Participe au cadrage haut et au contre-pressing de 3 secondes, puis coulisse dans la ligne de 4 pour fermer les relais centraux.`,
+        cuePhrase: `Positionne-toi entre deux adversaires pour recevoir orienté vers le but.`
+      },
+      {
+        id: `MG`,
+        name: `Milieu excentré gauche`,
+        line: `Largeur gauche & 2e poteau`,
+        isGK: false,
+        withBall: `Donne de la largeur près de la ligne en Z1/Z2 pour étirer le bloc. Quand l’action vient de droite en Z3, rentre à l’intérieur pour attaquer le 2e poteau.`,
+        withoutBall: `Côté ballon, sort cadrer de profil. Côté opposé, règle sa hauteur sur celle du ballon (entre milieu et attaque en Z3 adverse, aligné en Z1).`,
+        cuePhrase: `Donne la largeur quand on a le ballon, ajuste ta hauteur quand le jeu est à l’opposé.`
+      },
+      {
+        id: `MD`,
+        name: `Milieu excentré droit`,
+        line: `Largeur droite & percussion`,
+        isGK: false,
+        withBall: `Étire le bloc côté droit, provoque en 1v1 ou déborde pour centrer en Z3 ; peut aussi fixer côté droit avant de ressortir sur M6 pour renverser.`,
+        withoutBall: `Exige un gros volume de courses : ferme son couloir et protège les intervalles face au latéral adverse (attention au 2 contre 1 face à un 3-3-1).`,
+        cuePhrase: `Fixe ton vis-à-vis sur le côté et déclenche le centre pour nos trois joueurs devant le but.`
+      },
+      {
+        id: `AT`,
+        name: `Attaquant de pointe`,
+        line: `1er défenseur & finisseur`,
+        isGK: false,
+        withBall: `Fixe la charnière adverse, propose un appui dos au but ou attaque la profondeur. En Z3 sur centre, attaque le 1er poteau pour ouvrir l’espace.`,
+        withoutBall: `Déclenche la première orientation du pressing, ferme la passe de retour vers le défenseur opposé et guide l’adversaire vers la ligne de touche.`,
+        cuePhrase: `Ferme le retour derrière et attaque le premier poteau dès que l’ailier lève la tête.`
+      }
+    ];
+
+    const SEQUENCES = [
+      {
+        id: `seq-1`,
+        code: `01`,
+        title: `Structure 2-4-1 & Zones Z1/Z2/Z3`,
+        category: `Organisation`,
+        duration: 21,
+        objective: `Comprendre le point de départ 1-2-4-1, la colonne axiale de 6 joueurs et le découpage pédagogique en 3 zones (Z1, Z2, Z3) pour parler un langage commun.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.34,
+            label: `Phase 1 · Placement initial`,
+            speech: `Le 2-4-1 organise nos huit joueurs : un gardien, deux défenseurs centraux, quatre milieux avec deux axiaux et deux excentrés, et un attaquant. Ce n’est qu’un point de départ.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.34,
+            tEnd: 0.68,
+            label: `Phase 2 · Découpage Z1 / Z2 / Z3`,
+            speech: `Pour parler le même langage, on divise le terrain en trois zones : Z1 devant notre but, Z2 la zone médiane d’environ vingt mètres, et Z3 la moitié de terrain adverse.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.68,
+            tEnd: 1.0,
+            label: `Phase 3 · Faire vivre le bloc`,
+            speech: `Dès que le ballon bouge, les milieux excentrés ouvrent la largeur et toute l’équipe coulisse ensemble pour offrir plusieurs solutions au porteur.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« Les positions sont notre point de départ. Mais dès que le ballon bouge, l’équipe doit bouger avec lui. »`,
+            origin: `Script 2-4-1 (Séquences 01 & 03)`
+          },
+          {
+            quote: `« Zone 1 notre moitié devant notre but, Zone 2 les vingt mètres du milieu, Zone 3 chez l’adversaire : comme ça, tout le monde parle le même langage. »`,
+            origin: `Didier Mari — Repères Z1/Z2/Z3`
+          },
+          {
+            quote: `« Question FAST : Où se trouvent les espaces libres quand nos deux excentrés s’écartent près des lignes ? »`,
+            origin: `Pédagogie CFI U12/U13`
+          }
+        ],
+        keypoints: [
+          `<strong>Colonne vertébrale à 6 :</strong> G, DG, DD, M6, M8 et AT sécurisent l’axe central du terrain.`,
+          `<strong>Largeur naturelle :</strong> MG et MD permettent d’étirer le bloc adverse ou de combiner à l’intérieur.`,
+          `<strong>Souplesse :</strong> L’animation prime sur la géométrie fixe ; les postes doivent rester mobiles.`
+        ],
+        nuance: `Point de vigilance (Corpus) : Les 3 zones Z1/Z2/Z3 et les étiquettes M6/M8 sont des repères pédagogiques d’entraînement, non des interdits réglementaires en match.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[76,270], DG:[210,215], DD:[210,325], MG:[385,115], M6:[340,245], M8:[435,295], MD:[385,425], AT:[565,270] },
+            opp: [[795,270],[660,205],[660,335],[520,125],[510,270],[520,415],[410,215],[410,325]],
+            ball: [94,270],
+            guides: [{ type: `spine` }]
+          },
+          {
+            t: 0.36,
+            players: { G:[84,270], DG:[200,190], DD:[200,350], MG:[405,74], M6:[335,250], M8:[455,290], MD:[405,466], AT:[615,270] },
+            opp: [[795,270],[665,205],[665,335],[525,135],[515,270],[525,405],[415,220],[415,320]],
+            ball: [335,250],
+            guides: [{ type: `width`, from: [405,74], to: [405,466], label: `Occupation totale de la largeur` }]
+          },
+          {
+            t: 0.72,
+            players: { G:[92,292], DG:[235,235], DD:[240,365], MG:[430,150], M6:[380,315], M8:[495,350], MD:[465,462], AT:[635,310] },
+            opp: [[795,280],[670,235],[670,360],[540,190],[525,310],[535,430],[440,265],[445,355]],
+            ball: [465,455],
+            guides: [
+              { type: `pass`, from: [335,250], to: [465,455] },
+              { type: `triangle`, pts: [[380,315],[495,350],[465,462]] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[84,270], DG:[205,198], DD:[205,342], MG:[400,82], M6:[345,250], M8:[450,295], MD:[400,458], AT:[600,270] },
+            opp: [[795,270],[660,205],[660,335],[520,130],[510,270],[520,410],[410,220],[410,320]],
+            ball: [345,250],
+            guides: [{ type: `spine` }]
+          }
+        ]
+      },
+      {
+        id: `seq-2`,
+        code: `02`,
+        title: `Distance des centraux & Relance gardien`,
+        category: `Phase offensive`,
+        duration: 22,
+        objective: `Installer la relance propre depuis Z1 : repère minimal du but à 7 entre centraux, écartement à la prise de balle du gardien, soutien intérieur de M6 et mouvement après la passe.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.30,
+            label: `Phase 1 · Repère distance & écartement`,
+            speech: `Défensivement, la distance minimale entre nos deux centraux correspond à la largeur du but à sept. Dès que le gardien a le ballon, DG et DD s’écartent pour ouvrir des angles de relance.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.30,
+            tEnd: 0.65,
+            label: `Phase 2 · Choix court ou côté`,
+            speech: `Les excentrés donnent la largeur sur les lignes pendant que le milieu six se rapproche dans l’intervalle. Le gardien relance proprement sur le défenseur droit face au jeu.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.65,
+            tEnd: 1.0,
+            label: `Phase 3 · Une passe, un déplacement`,
+            speech: `Le défenseur droit trouve le six entre les deux premiers attaquants adverses, puis poursuit sa course pour rester disponible. Une passe, un déplacement, une nouvelle solution.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« La distance minimale entre les centraux, c’est la largeur du but à sept : cette référence est identique sur tous les terrains. »`,
+            origin: `Didier Mari — Repère de placement`
+          },
+          {
+            quote: `« Faire une passe ne veut pas dire s’arrêter. Après avoir donné le ballon, on poursuit son déplacement pour proposer une nouvelle solution. »`,
+            origin: `Script 2-4-1 (Séquence 10)`
+          },
+          {
+            quote: `« Orientation trois quarts, prise d’information avant de recevoir et contrôle du pied éloigné pour jouer face au jeu. »`,
+            origin: `FFF GIFE 6/8 & FIFA Talent Coach 3.4`
+          }
+        ],
+        keypoints: [
+          `<strong>Ne pas s’aligner :</strong> DG et DD doivent conserver un léger échelonnement pour ne pas se couper les lignes de passe.`,
+          `<strong>Plusieurs solutions :</strong> Toujours ouvrir au moins deux directions au porteur (extérieur MD ou intérieur M6).`,
+          `<strong>Option longue :</strong> Si l’adversaire bloque très haut, G peut allonger vers AT ou dans le dos du bloc.`
+        ],
+        nuance: `Nuance Corpus : Les centraux ne sont pas obligés de toujours passer par M6, ni G de jouer court à tout prix si la pression ferme l’axe.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[78,270], DG:[175,232], DD:[175,308], MG:[345,95], M6:[285,270], M8:[415,245], MD:[345,445], AT:[555,270] },
+            opp: [[795,270],[645,210],[645,330],[455,140],[435,270],[455,400],[320,210],[320,330]],
+            ball: [94,270],
+            guides: [{ type: `goalBracket`, x: 175, y1: 232, y2: 308, label: `Repère min. largeur but` }]
+          },
+          {
+            t: 0.30,
+            players: { G:[84,270], DG:[172,155], DD:[172,385], MG:[350,70], M6:[260,288], M8:[420,215], MD:[350,470], AT:[565,265] },
+            opp: [[795,270],[640,210],[640,330],[445,135],[420,265],[445,405],[300,205],[285,340]],
+            ball: [96,275],
+            guides: [
+              { type: `run`, from: [175,232], to: [172,155] },
+              { type: `run`, from: [175,308], to: [172,385] },
+              { type: `pass`, from: [96,275], to: [172,385] }
+            ]
+          },
+          {
+            t: 0.62,
+            players: { G:[92,295], DG:[185,195], DD:[200,388], MG:[370,74], M6:[295,308], M8:[440,225], MD:[385,468], AT:[585,260] },
+            opp: [[795,270],[635,215],[635,335],[435,145],[400,275],[420,415],[290,220],[245,365]],
+            ball: [200,388],
+            guides: [
+              { type: `pass`, from: [200,388], to: [295,308] },
+              { type: `pass`, from: [200,388], to: [385,468] },
+              { type: `run`, from: [295,308], to: [335,290] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[100,285], DG:[215,205], DD:[265,375], MG:[415,80], M6:[335,290], M8:[470,225], MD:[455,460], AT:[610,255] },
+            opp: [[795,270],[635,215],[635,335],[445,155],[405,280],[435,410],[325,245],[295,355]],
+            ball: [470,225],
+            guides: [
+              { type: `pass`, from: [335,290], to: [470,225] },
+              { type: `run`, from: [200,388], to: [265,375] }
+            ]
+          }
+        ]
+      },
+      {
+        id: `seq-3`,
+        code: `03`,
+        title: `Couverture échelonnée (« légèrement derrière »)`,
+        category: `Phase défensive`,
+        duration: 21,
+        objective: `Maîtriser le placement du 1er défenseur (cadrage de profil) et de son soutien (« légèrement derrière ») pour former un triangle défensif qui interdit l’axe.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.35,
+            label: `Phase 1 · Sortie du 1er défenseur`,
+            speech: `Quand le ballon arrive dans le couloir adverse, le joueur le plus proche sort immédiatement cadrer le porteur sur sa prise de balle, en orientant son corps de profil.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.35,
+            tEnd: 0.72,
+            label: `Phase 2 · Couverture légèrement derrière`,
+            speech: `Derrière lui, le défenseur droit et le six ne restent jamais sur la même ligne : ils se placent légèrement derrière, en couverture, avec vision périphérique sur le ballon, l’adversaire et le partenaire.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.72,
+            tEnd: 1.0,
+            label: `Phase 3 · Triangle défensif fermé`,
+            speech: `L’attaquant ferme la passe en retrait et le six verrouille l’intérieur. Le triangle défensif oblige l’adversaire à jouer sur le côté ou vers l’arrière.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« Toujours un tout petit peu en couverture, jamais à plat : vision périphérique ballon, adversaire, camarade ! »`,
+            origin: `Didier Mari — Animation défensive 2-4-1`
+          },
+          {
+            quote: `« Arriver sur la première touche du receveur et se mettre de profil pour orienter l’adversaire hors des zones dangereuses. »`,
+            origin: `FIFA — Defending as a unit`
+          }
+        ],
+        keypoints: [
+          `<strong>Orientation corporelle de profil :</strong> Fermer l’intérieur du terrain pour pousser le porteur vers la ligne de touche.`,
+          `<strong>Échelonnement :</strong> Si MD est éliminé sur un dribble, DD en retrait intervient immédiatement sans déséquilibrer DG.`,
+          `<strong>Rôle d’AT :</strong> Empêcher le changement de côté facile en coupant la passe en retrait.`
+        ],
+        nuance: `Point de vigilance : Demander au 6e joueur (M6) de fermer le demi-espace sans dézoner trop loin afin de ne pas fragiliser la charnière DD/DG.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[115,270], DG:[305,245], DD:[320,350], MG:[415,175], M6:[380,305], M8:[445,275], MD:[445,415], AT:[540,320] },
+            opp: [[785,270],[640,210],[620,350],[490,435],[455,335],[490,220],[405,295],[380,365]],
+            ball: [490,435],
+            guides: [{ type: `run`, from: [445,415], to: [410,435] }]
+          },
+          {
+            t: 0.36,
+            players: { G:[115,275], DG:[295,250], DD:[310,375], MG:[405,190], M6:[360,342], M8:[435,285], MD:[408,432], AT:[495,345] },
+            opp: [[785,270],[635,215],[605,365],[428,442],[445,355],[480,235],[395,305],[375,375]],
+            ball: [428,442],
+            guides: [
+              { type: `coverLine`, pts: [[408,432],[310,375],[295,250]], label: `Échelonnement légèrement derrière` },
+              { type: `blockLane`, from: [428,442], to: [395,305] }
+            ]
+          },
+          {
+            t: 0.72,
+            players: { G:[115,275], DG:[292,255], DD:[305,382], MG:[398,195], M6:[356,352], M8:[428,295], MD:[396,435], AT:[462,368] },
+            opp: [[785,270],[635,215],[590,375],[412,442],[440,365],[475,245],[390,315],[372,380]],
+            ball: [412,442],
+            guides: [
+              { type: `defTriangle`, pts: [[396,435],[356,352],[462,368]], label: `Triangle défensif` },
+              { type: `coverLine`, pts: [[396,435],[305,382],[292,255]], label: `Couverture mutuelle` },
+              { type: `blockLane`, from: [412,442], to: [440,365] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[115,275], DG:[292,255], DD:[305,382], MG:[398,195], M6:[356,352], M8:[428,295], MD:[396,435], AT:[462,368] },
+            opp: [[785,270],[635,215],[590,375],[412,442],[440,365],[475,245],[390,315],[372,380]],
+            ball: [412,442],
+            guides: [
+              { type: `defTriangle`, pts: [[396,435],[356,352],[462,368]], label: `Triangle défensif` },
+              { type: `coverLine`, pts: [[396,435],[305,382],[292,255]], label: `Couverture mutuelle` }
+            ]
+          }
+        ]
+      },
+      {
+        id: `seq-4`,
+        code: `04`,
+        title: `Coulissement sur 3/4 de terrain & Ailier opposé`,
+        category: `Phase défensive`,
+        duration: 22,
+        objective: `Déplacer tout le bloc en compacité sur environ les 3/4 du terrain côté ballon, en ajustant la hauteur de l’ailier opposé (MG ou MD) selon l’avancée du ballon en Z2 ou Z1.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.36,
+            label: `Phase 1 · Bloc compact sur 3/4 côté droit`,
+            speech: `Lorsque l’adversaire porte le ballon à droite, tout notre bloc coulisse pour occuper les trois quarts du terrain. À l’opposé, le milieu gauche reste à hauteur entre milieu et attaquant pour garder une menace de contre.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.36,
+            tEnd: 0.72,
+            label: `Phase 2 · Coulissement collectif à la bascule`,
+            speech: `Si l’adversaire renverse vers notre gauche, les huit joueurs coulissent en même temps pour fermer le nouveau couloir fort et protéger l’axe central.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.72,
+            tEnd: 1.0,
+            label: `Phase 3 · Alignement défensif en Z1`,
+            speech: `Si l’adversaire progresse jusque devant notre ligne défensive en Z1, l’excentré opposé descend à hauteur des défenseurs centraux pour fermer le second poteau.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« S’il part à gauche, notre bloc se déplace à gauche. La défense, ce n’est pas uniquement le travail des défenseurs centraux. »`,
+            origin: `Script 2-4-1 (Séquence 13)`
+          },
+          {
+            quote: `« Quand le ballon est entre le milieu et l’attaquant, l’ailier opposé se place entre les deux ; quand l’adversaire arrive à hauteur de la ligne défensive, l’ailier opposé descend avec elle. »`,
+            origin: `Didier Mari — Hauteur de l’ailier opposé`
+          }
+        ],
+        keypoints: [
+          `<strong>Couloir fort / Couloir faible :</strong> On abandonne volontairement l’aile opposée lointaine pour densifier l’axe et les 3/4 côté ballon.`,
+          `<strong>Temps de trajet :</strong> Une transversale longue laisse le temps au bloc de coulisser si tous partent au départ de la passe.`,
+          `<strong>Exigence physique :</strong> Ce système demande un gros volume de courses aux milieux excentrés MG et MD.`
+        ],
+        nuance: `Attention face au 3-3-1 (Torofoot / Vision Tactique) : Le 3-3-1 adverse présente souvent deux joueurs sur le couloir ; MG ou MD a besoin du soutien rapide de M6 ou DD/DG.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[118,285], DG:[305,255], DD:[315,365], MG:[475,180], M6:[395,335], M8:[455,280], MD:[445,428], AT:[545,350] },
+            opp: [[795,270],[645,230],[635,375],[490,445],[495,310],[505,190],[410,275],[400,365]],
+            ball: [490,445],
+            guides: [
+              { type: `band34`, yTop: 165, yBot: 475, label: `Bloc compact sur 3/4 du terrain` },
+              { type: `heightLink`, pts: [[475,180],[490,445]] }
+            ]
+          },
+          {
+            t: 0.40,
+            players: { G:[112,255], DG:[275,175], DD:[265,285], MG:[405,122], M6:[355,205], M8:[410,255], MD:[365,345], AT:[495,195] },
+            opp: [[795,270],[615,175],[625,315],[435,112],[460,245],[495,365],[380,195],[385,295]],
+            ball: [435,112],
+            guides: [
+              { type: `band34`, yTop: 95, yBot: 390, label: `Coulissement collectif 3/4 côté gauche` },
+              { type: `run`, from: [445,428], to: [365,345] },
+              { type: `run`, from: [475,180], to: [405,122] }
+            ]
+          },
+          {
+            t: 0.78,
+            players: { G:[94,250], DG:[195,182], DD:[185,262], MG:[245,128], M6:[245,222], M8:[315,245], MD:[215,328], AT:[405,210] },
+            opp: [[795,270],[540,175],[545,305],[265,112],[365,225],[375,355],[295,195],[270,275]],
+            ball: [265,112],
+            guides: [
+              { type: `band34`, yTop: 85, yBot: 365, label: `Bloc resserré en Z1 (3/4 haut)` },
+              { type: `heightLink`, pts: [[195,182],[185,262],[215,328]] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[94,250], DG:[195,182], DD:[185,262], MG:[245,128], M6:[245,222], M8:[315,245], MD:[215,328], AT:[405,210] },
+            opp: [[795,270],[540,175],[545,305],[265,112],[365,225],[375,355],[295,195],[270,275]],
+            ball: [265,112],
+            guides: [
+              { type: `band34`, yTop: 85, yBot: 365, label: `Alignement défensif avec l’ailier opposé` },
+              { type: `heightLink`, pts: [[195,182],[185,262],[215,328]] }
+            ]
+          }
+        ]
+      },
+      {
+        id: `seq-5`,
+        code: `05`,
+        title: `Phase offensive : Triangles, Fixation & Renversement`,
+        category: `Phase offensive`,
+        duration: 22,
+        objective: `Utiliser des triangles autour du porteur pour attirer l’adversaire d’un côté, ressortir par M6/M8 et exploiter le côté opposé tout en gardant un équilibre 2+1.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.34,
+            label: `Phase 1 · Fixer en triangle côté droit`,
+            speech: `En phase offensive, le 2-4-1 crée des triangles autour du porteur. Le défenseur droit fixe puis trouve l’excentré droit pour attirer le bloc adverse dans ce couloir.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.34,
+            tEnd: 0.68,
+            label: `Phase 2 · Ressortir et renverser`,
+            speech: `Dès que le couloir est fermé, l’excentré ressort sur le six en soutien qui renverse rapidement vers l’espace libéré pour le milieu gauche lancé.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.68,
+            tEnd: 1.0,
+            label: `Phase 3 · Projection & Équilibre 2+1`,
+            speech: `Le milieu huit se projette vers l’attaquant pour combiner à trois, tandis que le six et nos deux centraux assurent l’équilibre deux plus un derrière l’action.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« Si l’adversaire vient fermer un côté, nous pouvons l’attirer dans cette zone, ressortir le ballon et chercher l’espace libéré de l’autre côté. »`,
+            origin: `Script 2-4-1 (Séquence 12)`
+          },
+          {
+            quote: `« Lorsque l’un de nos milieux se projette, les autres s’organisent derrière lui pour ne pas couper l’équipe en deux. »`,
+            origin: `Script 2-4-1 & Schéma Original 2-4-1`
+          }
+        ],
+        keypoints: [
+          `<strong>Appui – Soutien – 3e joueur :</strong> Le passeur ne cherche pas forcément le receveur final directement, il prépare le renversement.`,
+          `<strong>Équilibre 2+1 :</strong> DG, DD et M6 protègent la perte éventuelle dans la zone d’affrontement.`,
+          `<strong>Variété :</strong> Ne pas figer un circuit unique ; les enfants lisent si l’espace est devant ou à l’opposé.`
+        ],
+        nuance: `Attention (Torofoot) : Si M6 et M8 restent trop proches dans l’axe, ils peuvent encombrer la zone de décrochage de l’attaquant.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[145,270], DG:[335,220], DD:[350,380], MG:[490,82], M6:[410,308], M8:[520,350], MD:[485,456], AT:[620,285] },
+            opp: [[815,270],[685,225],[675,345],[570,185],[545,305],[565,415],[465,270],[455,365]],
+            ball: [365,380],
+            guides: [
+              { type: `triangle`, pts: [[350,380],[410,308],[485,456]] },
+              { type: `pass`, from: [365,380], to: [485,456] }
+            ]
+          },
+          {
+            t: 0.34,
+            players: { G:[155,270], DG:[355,225], DD:[405,388], MG:[545,84], M6:[440,320], M8:[545,335], MD:[515,458], AT:[645,275] },
+            opp: [[815,270],[695,245],[685,360],[580,235],[555,345],[565,440],[495,310],[475,405]],
+            ball: [515,458],
+            guides: [
+              { type: `triangle`, pts: [[440,320],[545,335],[515,458]] },
+              { type: `pass`, from: [515,458], to: [440,320] },
+              { type: `run`, from: [545,84], to: [635,95] }
+            ]
+          },
+          {
+            t: 0.68,
+            players: { G:[175,265], DG:[395,215], DD:[415,345], MG:[635,95], M6:[475,285], M8:[625,240], MD:[565,425], AT:[685,285] },
+            opp: [[815,270],[705,215],[700,335],[595,180],[575,295],[585,405],[515,275],[505,365]],
+            ball: [475,285],
+            guides: [
+              { type: `pass`, from: [475,285], to: [635,95] },
+              { type: `run`, from: [625,240], to: [685,210] },
+              { type: `triangle`, pts: [[395,215],[415,345],[475,285]] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[185,260], DG:[415,210], DD:[425,335], MG:[675,105], M6:[505,265], M8:[685,210], MD:[595,395], AT:[725,285] },
+            opp: [[815,270],[720,185],[715,305],[615,135],[590,260],[610,375],[535,245],[535,340]],
+            ball: [675,105],
+            guides: [
+              { type: `triangle`, pts: [[415,210],[425,335],[505,265]] },
+              { type: `pass`, from: [675,105], to: [685,210] }
+            ]
+          }
+        ]
+      },
+      {
+        id: `seq-6`,
+        code: `06`,
+        title: `Triangle d’attaque à 3 dans la surface (Z3)`,
+        category: `Phase offensive`,
+        duration: 20,
+        objective: `Structurer la zone de finition en Z3 : dès le débordement pour centrer, placer deux joueurs devant le but (1er et 2e poteau) et un troisième en retrait à l’entrée de la surface.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.35,
+            label: `Phase 1 · Déclenchement côté droit en Z3`,
+            speech: `Dès que notre excentré droit prend le couloir en Z3 avec la possibilité de centrer, le déclenchement devant le but s’organise à trois.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.35,
+            tEnd: 0.72,
+            label: `Phase 2 · Deux devant, un en retrait`,
+            speech: `L’attaquant croise au premier poteau, l’excentré opposé rentre à l’intérieur vers le deuxième poteau, et le milieu huit arrive en retrait pour former le triangle d’attaque à trois.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.72,
+            tEnd: 1.0,
+            label: `Phase 3 · Finition & Couverture arrière`,
+            speech: `Peu importe qui occupe chaque pointe du triangle : l’essentiel est d’avoir deux présences dans les six mètres, un retrait pour les ballons repoussés, et nos trois joueurs derrière pour sécuriser.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« Devant les buts au foot à huit, la clé c’est trois joueurs : deux devant les cages et un en retrait, plus notre couverture si on la perd. »`,
+            origin: `Didier Mari — Animation offensive Z3`
+          },
+          {
+            quote: `« Dès qu’une occasion se présente, l’objectif de l’attaquant est clair : faire trembler les filets, tout en suivant les rebonds. »`,
+            origin: `Script 2-4-1 & FIFA (12–15 ans)`
+          }
+        ],
+        keypoints: [
+          `<strong>Permutations possibles :</strong> Si AT décroche, M8 ou MG attaque le 1er poteau — la zone prime sur le numéro.`,
+          `<strong>Si le centre est fermé :</strong> Tant que le porteur n’est pas ouvert pour centrer, l’excentré opposé garde la largeur pour un renversement.`,
+          `<strong>Prévention de contre :</strong> M6, DD et DG verrouillent l’axe derrière le ballon.`
+        ],
+        nuance: `Règle d’animation : Un décrochage de AT doit être compensé par la course de profondeur de M8 ou MG pour ne pas vider la surface.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[185,270], DG:[445,220], DD:[455,345], MG:[645,135], M6:[525,295], M8:[615,315], MD:[695,455], AT:[685,290] },
+            opp: [[828,270],[745,235],[745,315],[685,180],[665,285],[695,405],[615,260],[615,345]],
+            ball: [695,455],
+            guides: [{ type: `run`, from: [695,455], to: [795,425] }]
+          },
+          {
+            t: 0.40,
+            players: { G:[195,270], DG:[485,225], DD:[495,340], MG:[745,195], M6:[575,285], M8:[685,305], MD:[792,425], AT:[755,285] },
+            opp: [[834,275],[770,245],[775,320],[725,215],[695,295],[755,390],[655,265],[665,335]],
+            ball: [792,425],
+            guides: [
+              { type: `run`, from: [755,285], to: [785,292] },
+              { type: `run`, from: [745,195], to: [782,225] },
+              { type: `run`, from: [685,305], to: [705,315] }
+            ]
+          },
+          {
+            t: 0.75,
+            players: { G:[200,270], DG:[495,225], DD:[505,335], MG:[785,222], M6:[585,285], M8:[705,315], MD:[802,418], AT:[786,292] },
+            opp: [[836,272],[778,248],[782,315],[735,225],[705,298],[768,388],[660,265],[672,332]],
+            ball: [785,222],
+            guides: [
+              { type: `attackTriangle`, pts: [[786,292],[785,222],[705,315]], label: `Triangle d’attaque à 3` },
+              { type: `pass`, from: [802,418], to: [785,222] },
+              { type: `triangle`, pts: [[495,225],[505,335],[585,285]] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[200,270], DG:[495,225], DD:[505,335], MG:[785,222], M6:[585,285], M8:[705,315], MD:[802,418], AT:[786,292] },
+            opp: [[836,272],[778,248],[782,315],[735,225],[705,298],[768,388],[660,265],[672,332]],
+            ball: [842,258],
+            guides: [
+              { type: `attackTriangle`, pts: [[786,292],[785,222],[705,315]], label: `Triangle d’attaque à 3` },
+              { type: `pass`, from: [785,222], to: [842,258] }
+            ]
+          }
+        ]
+      },
+      {
+        id: `seq-7`,
+        code: `07`,
+        title: `Transition ÉLAN (Récupération → Attaque)`,
+        category: `Transition`,
+        duration: 21,
+        objective: `Appliquer le repère mnémotechnique ÉLAN dès la récupération du ballon : Élargir au maximum, Libérer au bon moment, Avancer et progresser, Ne pas s’enfermer.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.28,
+            label: `É · Élargir au maximum`,
+            speech: `À la récupération du ballon par le six, c’est l’ÉLAN ! E comme Élargir au maximum : nos excentrés ouvrent les couloirs et nos défenseurs s’écartent immédiatement.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.28,
+            tEnd: 0.56,
+            label: `L · Libérer le ballon au bon moment`,
+            speech: `L comme Libérer le ballon au bon moment : on sort de la densité adverse par une passe propre vers le côté ouvert.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.56,
+            tEnd: 0.80,
+            label: `A · Avancer et progresser`,
+            speech: `A comme Avancer et progresser : on trouve le huit entre les lignes qui se retourne pour lancer l’attaquant dans la profondeur.`
+          },
+          {
+            id: `c4`,
+            tStart: 0.80,
+            tEnd: 1.0,
+            label: `N · Ne pas s’enfermer`,
+            speech: `N comme Ne pas s’enfermer : le bloc garde toujours une solution en soutien et le côté opposé disponible pour renverser si besoin.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« Quand nous avons le ballon : c’est l’ÉLAN ! Élargir, Libérer au bon moment, Avancer, Ne pas s’enfermer. »`,
+            origin: `Script 2-4-1 (Séquence 14 — Repère ÉLAN)`
+          },
+          {
+            quote: `« Après avoir regagné le ballon, contrôler d’abord proprement avant de se précipiter, puis utiliser la largeur et la profondeur. »`,
+            origin: `FIFA — Defending as a unit / Build & progress`
+          }
+        ],
+        keypoints: [
+          `<strong>Temps de réaction :</strong> Passer en moins de deux secondes d’un bloc resserré à un bloc ouvert en largeur.`,
+          `<strong>Premier regard vers l’avant :</strong> Vérifier d’abord si AT ou M8 peut être touché verticalement avant de sécuriser latéralement.`,
+          `<strong>Porte de sortie :</strong> Un porteur excentré ne doit jamais rester sans soutien arrière.`
+        ],
+        nuance: `Précision Corpus : L’acronyme ÉLAN est un repère pédagogique propre au projet Élan Boucalais pour faciliter la mémorisation des U12/U13 sur le terrain.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[100,270], DG:[225,225], DD:[235,330], MG:[320,175], M6:[325,285], M8:[385,250], MD:[335,375], AT:[495,270] },
+            opp: [[795,270],[610,210],[605,330],[450,155],[415,285],[440,395],[355,245],[360,325]],
+            ball: [325,285],
+            guides: [{ type: `hudTag`, text: `É · ÉLARGIR AU MAXIMUM`, tone: `cyan` }]
+          },
+          {
+            t: 0.28,
+            players: { G:[105,270], DG:[230,170], DD:[235,370], MG:[395,78], M6:[335,285], M8:[435,235], MD:[395,462], AT:[555,260] },
+            opp: [[795,270],[620,210],[615,330],[475,150],[430,285],[460,405],[375,245],[380,330]],
+            ball: [335,285],
+            guides: [
+              { type: `hudTag`, text: `L · LIBÉRER HORS DENSITÉ`, tone: `cyan` },
+              { type: `run`, from: [320,175], to: [395,78] },
+              { type: `run`, from: [335,375], to: [395,462] },
+              { type: `pass`, from: [335,285], to: [435,455] }
+            ]
+          },
+          {
+            t: 0.58,
+            players: { G:[125,270], DG:[285,180], DD:[295,370], MG:[475,82], M6:[385,295], M8:[525,305], MD:[445,458], AT:[635,255] },
+            opp: [[795,270],[655,215],[650,335],[510,165],[480,295],[505,425],[435,265],[445,375]],
+            ball: [445,458],
+            guides: [
+              { type: `hudTag`, text: `A · AVANCER ET PROGRESSER`, tone: `sage` },
+              { type: `pass`, from: [445,458], to: [525,305] },
+              { type: `run`, from: [635,255], to: [695,245] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[155,270], DG:[360,200], DD:[375,350], MG:[615,92], M6:[455,285], M8:[575,290], MD:[555,445], AT:[705,245] },
+            opp: [[795,270],[695,220],[690,330],[575,165],[545,295],[570,415],[500,260],[505,360]],
+            ball: [705,245],
+            guides: [
+              { type: `hudTag`, text: `N · NE PAS S’ENFERMER`, tone: `sage` },
+              { type: `pass`, from: [525,305], to: [705,245] },
+              { type: `triangle`, pts: [[360,200],[375,350],[455,285]] }
+            ]
+          }
+        ]
+      },
+      {
+        id: `seq-8`,
+        code: `08`,
+        title: `Transition STOP (Perte → Pressing 3 s & Repli)`,
+        category: `Transition`,
+        duration: 21,
+        objective: `Réagir collectivement à la perte avec STOP : Se resserrer, Trois secondes de pressing, On coupe les lignes, Protéger l’axe en priorité si la récupération immédiate échoue.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.30,
+            label: `S · Se resserrer immédiatement`,
+            speech: `Perte de balle ! C’est le signal STOP. S comme Se resserrer immédiatement : tout le monde se rapproche du ballon au lieu de regarder l’action.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.30,
+            tEnd: 0.65,
+            label: `T & O · 3 secondes de pressing & Couper les passes`,
+            speech: `T comme Trois secondes de pressing : le joueur le plus proche monte cadrer pendant que ses partenaires coupent les lignes de passe — O — pour tenter de récupérer tout de suite.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.65,
+            tEnd: 1.0,
+            label: `P · Protéger l’axe en priorité`,
+            speech: `P pour Protéger l’axe : si l’adversaire échappe au pressing après trois secondes, on ne se jette plus, tout le bloc se replace compact dans l’axe.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« À la perte du ballon : c’est STOP ! Se resserrer, Trois secondes de pressing, On coupe les lignes de passe, Protéger l’axe en priorité. »`,
+            origin: `Script 2-4-1 (Séquences 11 & 14)`
+          },
+          {
+            quote: `« Une pression immédiate n’est pertinente que si la couverture suit ; sinon temporiser et protéger l’axe et la profondeur. »`,
+            origin: `Corpus de référence 2-4-1 (Synthèse critique)`
+          }
+        ],
+        keypoints: [
+          `<strong>Repère d’engagement :</strong> Les 3 secondes donnent un cadre d’intensité collective aux U12/U13, pas un ordre de se faire éliminer en un contre un.`,
+          `<strong>Changement de rôle instantané :</strong> Le plus proche presse, le deuxième et le troisième coupent les relais intérieurs.`,
+          `<strong>Bascule lucide :</strong> Passé 3 s sans récupération, priorité absolue à la fermeture de l’axe.`
+        ],
+        nuance: `Distinction Corpus : La FA utilise un exercice de récupération en 5 s ; les 3 s du STOP sont propres au projet club et servent de déclencheur éducatif.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[130,270], DG:[345,210], DD:[355,345], MG:[565,90], M6:[435,280], M8:[535,335], MD:[580,455], AT:[655,270] },
+            opp: [[795,270],[685,220],[675,340],[560,348],[550,210],[595,425],[485,260],[490,345]],
+            ball: [560,348],
+            guides: [{ type: `hudTag`, text: `S · SE RESSERRER · 3s`, tone: `coral` }]
+          },
+          {
+            t: 0.32,
+            players: { G:[125,270], DG:[340,225], DD:[350,340], MG:[505,155], M6:[465,308], M8:[546,342], MD:[535,405], AT:[600,295] },
+            opp: [[795,270],[680,225],[670,345],[558,350],[545,225],[590,420],[485,275],[495,355]],
+            ball: [558,350],
+            guides: [
+              { type: `hudTag`, text: `T · PRESSING 3s → 2s`, tone: `coral` },
+              { type: `pressRing`, cx: 558, cy: 350, r: 58 },
+              { type: `pressArrow`, from: [535,335], to: [552,348] }
+            ]
+          },
+          {
+            t: 0.62,
+            players: { G:[122,270], DG:[320,235], DD:[330,335], MG:[465,175], M6:[440,305], M8:[535,355], MD:[505,405], AT:[565,310] },
+            opp: [[795,270],[675,230],[665,345],[545,385],[535,240],[585,425],[490,295],[505,365]],
+            ball: [585,425],
+            guides: [
+              { type: `hudTag`, text: `O · COUPER LES LIGNES · 1s`, tone: `coral` },
+              { type: `blockLane`, from: [585,425], to: [490,295] },
+              { type: `blockLane`, from: [585,425], to: [505,365] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[115,270], DG:[285,225], DD:[285,325], MG:[385,175], M6:[365,285], M8:[415,255], MD:[395,390], AT:[495,295] },
+            opp: [[795,270],[655,225],[645,335],[520,385],[510,245],[540,425],[455,275],[465,365]],
+            ball: [540,425],
+            guides: [
+              { type: `hudTag`, text: `P · PROTÉGER L’AXE (BLOC COMPACT)`, tone: `warn` },
+              { type: `band34`, yTop: 155, yBot: 425, label: `Repli axial compact` }
+            ]
+          }
+        ]
+      },
+      {
+        id: `seq-9`,
+        code: `09`,
+        title: `Remises en jeu (Touches) : Règle de « 4 », Tiroir & Carré/Losange`,
+        category: `Remise en jeu`,
+        duration: 22,
+        objective: `Organiser les touches selon les fiches FFF GIFE U12/U13 : règle de 4 (4 m, 4 solutions, 4 s), coordination en tiroir, déstructuration carré ↔ losange et soutien actif du gardien.`,
+        defaults: { zones: true, vectors: true, opponents: true },
+        cues: [
+          {
+            id: `c1`,
+            tStart: 0,
+            tEnd: 0.34,
+            label: `Phase 1 · Règle de 4 & Départ en Carré`,
+            speech: `Sur touche, on applique la règle pédagogique de quatre : se placer à quatre mètres du porteur, lui proposer quatre solutions et jouer en moins de quatre secondes. Quatre joueurs forment d’abord un carré.`
+          },
+          {
+            id: `c2`,
+            tStart: 0.34,
+            tEnd: 0.70,
+            label: `Phase 2 · Passage en Losange & Logique du Tiroir`,
+            speech: `Par rotation horaire ou contre-horaire, le carré devient un losange : en logique de tiroir, l’attaquant plonge libérer un espace pendant que le huit vient proposer en soutien.`
+          },
+          {
+            id: `c3`,
+            tStart: 0.70,
+            tEnd: 1.0,
+            label: `Phase 3 · Relais & Rôle actif du gardien`,
+            speech: `Si l’avant est bloqué, on peut aussi jouer en sécurité sur le défenseur droit et utiliser le rôle actif du gardien pour ressortir vers le côté opposé.`
+          }
+        ],
+        verbatims: [
+          {
+            quote: `« Règle de 4 : 4 mètres du porteur, 4 solutions pour le porteur, 4 secondes d’attente maximum. »`,
+            origin: `FFF GIFE U12/U13 — Fiche pratique (1/8)`
+          },
+          {
+            quote: `« J’incite à libérer un espace, ou je suis incité à utiliser un espace. Quelle que soit la hauteur de la touche, rappeler le rôle actif et primordial du gardien. »`,
+            origin: `FFF GIFE U12/U13 — Fiches (2/8 à 4/8)`
+          }
+        ],
+        keypoints: [
+          `<strong>Carré ↔ Losange :</strong> Changer de forme géométrique crée l’incertitude chez les marqueurs adverses.`,
+          `<strong>Logique du Tiroir :</strong> Coordination à deux (un joueur s’éloigne en profondeur/largeur, l’autre se rapproche).`,
+          `<strong>Gardien actif :</strong> G quitte sa ligne pour offrir une passe de sécurité en retrait si le couloir est verrouillé.`
+        ],
+        nuance: `Précision Corpus : La « règle de 4 » et les formes carré/losange sont des aides pédagogiques FFF GIFE pour stimuler la mobilité, et non des règles d’arbitrage ni des automatismes rigides.`,
+        keyframes: [
+          {
+            t: 0,
+            players: { G:[135,285], DG:[315,215], DD:[395,405], MG:[505,165], M6:[395,305], M8:[565,305], MD:[485,495], AT:[565,405] },
+            opp: [[795,270],[665,245],[655,355],[585,320],[580,415],[455,335],[445,425],[505,445]],
+            ball: [485,492],
+            guides: [
+              { type: `hudTag`, text: `RÈGLE DE 4 · 4m · 4 SOL. · 4s MAX`, tone: `cyan` },
+              { type: `throwShape`, pts: [[395,405],[395,305],[565,305],[565,405]], label: `Départ Carré` }
+            ]
+          },
+          {
+            t: 0.36,
+            players: { G:[155,295], DG:[320,215], DD:[385,390], MG:[525,145], M6:[455,275], M8:[488,378], MD:[485,495], AT:[625,435] },
+            opp: [[795,270],[665,245],[655,365],[590,310],[605,425],[470,315],[435,410],[510,435]],
+            ball: [485,492],
+            guides: [
+              { type: `hudTag`, text: `CARRÉ → LOSANGE · LOGIQUE TIROIR`, tone: `sage` },
+              { type: `throwShape`, pts: [[385,390],[455,275],[625,435],[488,378]], label: `Losange` },
+              { type: `run`, from: [565,405], to: [625,435] },
+              { type: `run`, from: [565,305], to: [488,378] },
+              { type: `pass`, from: [485,492], to: [488,378] },
+              { type: `pass`, from: [485,492], to: [385,390] }
+            ]
+          },
+          {
+            t: 0.70,
+            players: { G:[165,290], DG:[325,210], DD:[378,388], MG:[545,120], M6:[460,268], M8:[492,372], MD:[495,465], AT:[635,415] },
+            opp: [[795,270],[665,245],[660,360],[590,305],[610,415],[480,310],[440,398],[505,425]],
+            ball: [378,388],
+            guides: [
+              { type: `hudTag`, text: `SOUTIEN ACTIF DU GARDIEN G`, tone: `cyan` },
+              { type: `pass`, from: [378,388], to: [165,290] },
+              { type: `pass`, from: [165,290], to: [325,210] }
+            ]
+          },
+          {
+            t: 1,
+            players: { G:[135,280], DG:[335,195], DD:[365,375], MG:[565,100], M6:[465,260], M8:[535,335], MD:[515,455], AT:[655,340] },
+            opp: [[795,270],[670,225],[670,340],[585,260],[585,370],[490,265],[455,365],[510,405]],
+            ball: [465,260],
+            guides: [
+              { type: `pass`, from: [325,210], to: [465,260] },
+              { type: `pass`, from: [465,260], to: [565,100] }
+            ]
+          }
+        ]
+      }
+    ];
+
+    /* Runtime State */
+    const state = {
+      currentSeqIndex: 0,
+      isPlaying: false,
+      progress: 0,
+      speed: 1,
+      loopMode: `sequence`, // 'sequence' | 'all'
+      voiceEnabled: true,
+      selectedVoiceURI: ``,
+      layers: { zones: true, vectors: true, opponents: true },
+      freeboardMode: false,
+      freePositions: null,
+      draggingId: null,
+      selectedRoleId: `M6`,
+      activeDossierTab: `tactics`,
+      masteredIds: [],
+      notesBySeq: {},
+      lastCueIndex: -1,
+      rafId: null,
+      lastFrameTs: null,
+      voices: [],
+
+      // Synchronisation animation / voix-off
+      narrationFinished: true,
+      speechGeneration: 0,
+      audioElement: null,
+      audioUrl: null
+    };
+
+    const SVG_NS = `http://www.w3.org/2000/svg`;
+
+    /* Math & Interpolation helpers */
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function clamp(val, min, max) {
+      return Math.max(min, Math.min(max, val));
+    }
+
+    function formatTime(seconds) {
+      const s = Math.max(0, Math.round(seconds));
+      const m = Math.floor(s / 60);
+      const rem = s % 60;
+      return `${String(m).padStart(2, `0`)}:${String(rem).padStart(2, `0`)}`;
+    }
+
+    function getCurrentSeq() {
+      return SEQUENCES[state.currentSeqIndex] || SEQUENCES[0];
+    }
+
+    function getInterpolatedFrame(seq, tNorm) {
+      const kfs = seq.keyframes;
+      if (!kfs || kfs.length === 0) return null;
+      if (tNorm <= kfs[0].t) return kfs[0];
+      if (tNorm >= kfs[kfs.length - 1].t) return kfs[kfs.length - 1];
+
+      let k0 = kfs[0];
+      let k1 = kfs[1];
+      for (let i = 0; i < kfs.length - 1; i++) {
+        if (tNorm >= kfs[i].t && tNorm <= kfs[i + 1].t) {
+          k0 = kfs[i];
+          k1 = kfs[i + 1];
+          break;
+        }
+      }
+      const span = Math.max(0.0001, k1.t - k0.t);
+      const localT = easeInOutCubic((tNorm - k0.t) / span);
+
+      const players = {};
+      for (const meta of TOKEN_META) {
+        const p0 = k0.players[meta.id] || [450, 270];
+        const p1 = k1.players[meta.id] || p0;
+        players[meta.id] = [lerp(p0[0], p1[0], localT), lerp(p0[1], p1[1], localT)];
+      }
+
+      const opp = [];
+      const oppLen = Math.min(k0.opp.length, k1.opp.length);
+      for (let i = 0; i < oppLen; i++) {
+        opp.push([lerp(k0.opp[i][0], k1.opp[i][0], localT), lerp(k0.opp[i][1], k1.opp[i][1], localT)]);
+      }
+
+      const ball = [lerp(k0.ball[0], k1.ball[0], localT), lerp(k0.ball[1], k1.ball[1], localT)];
+      const guides = localT < 0.5 ? (k0.guides || []) : (k1.guides || []);
+
+      return { players, opp, ball, guides };
+    }
+
+    function getActiveCueIndex(seq, tNorm) {
+      for (let i = 0; i < seq.cues.length; i++) {
+        const c = seq.cues[i];
+        if (tNorm >= c.tStart && (tNorm < c.tEnd || i === seq.cues.length - 1)) {
+          return i;
+        }
+      }
+      return 0;
+    }
+
+    /* Augustin préenregistré */
+    function initVoices() {
+      const wrap = document.getElementById('voice-select-wrap');
+      const sel = document.getElementById('voice-select');
+      if (wrap) wrap.hidden = false;
+      if (sel) {
+        sel.innerHTML = '<option value="Augustin">Augustin — voix intégrée</option>';
+        sel.value = 'Augustin';
+        sel.disabled = true;
+      }
+      updateVoiceBadge('Augustin — prêt hors ligne', false);
+    }
+
+    function updateVoiceBadge(text, isSpeaking) {
+      const badge = document.getElementById(`voice-status-badge`);
+      const metric = document.getElementById(`metric-voice-state`);
+      if (badge) {
+        badge.textContent = text;
+        badge.classList.toggle(`speaking`, Boolean(isSpeaking));
+      }
+      if (metric) {
+        if (!state.voiceEnabled) metric.textContent = `Muet`;
+        else if (isSpeaking) metric.textContent = `Lecture`;
+        else metric.textContent = `Prêt`;
+      }
+    }
+
+  
+    function stopSpeech() {
+      state.speechGeneration++;
+      state.narrationFinished = true;
+      if (state.audioElement) {
+        state.audioElement.pause();
+        state.audioElement.onended = null;
+        state.audioElement.onerror = null;
+        state.audioElement.onplaying = null;
+      }
+      if (state.audioUrl) {
+        URL.revokeObjectURL(state.audioUrl);
+        state.audioUrl = null;
+      }
+      updateVoiceBadge(state.voiceEnabled ? 'Voix-off prête' : 'Voix-off coupée', false);
+    }
+    
+    // Amorce la lecture sur iOS lors d'un geste de l'utilisateur.
+    function primeMobileAudio() {
+      // La lecture est declenchee directement depuis le geste utilisateur.
+      // Ne pas lancer puis mettre en pause un WAV silencieux dans le meme lecteur.
+    }
+
+    function retryBlockedAudio() {
+      const audio = state.audioElement;
+      if (!audio || !audio.src || !state.voiceEnabled) return;
+      state.narrationFinished = false;
+      audio.play().catch(() => {
+        state.narrationFinished = true;
+        updateVoiceBadge('Audio toujours bloqué', false);
+      });
+    }
+
+    // AUDIO AUTONOME : fichiers WAV locaux, aucun appel Phonon pendant la lecture.
+    const OFFLINE_AUDIO = {
+  "Le 2-4-1 organise nos huit joueurs : un gardien, deux défenseurs centraux, quatre milieux avec deux axiaux et deux excentrés, et un attaquant. Ce n’est qu’un point de départ.": "audio/e9a9008f54f9df5fbf1ef8400e14fd6d6d8e88f5f5b457cbe875fd5a869301c8.wav",
+  "Pour parler le même langage, on divise le terrain en trois zones : Z1 devant notre but, Z2 la zone médiane d’environ vingt mètres, et Z3 la moitié de terrain adverse.": "audio/ffa63f9c83bb97c64dca688fe3ca568fb8034a3d4cf1fba8601246461c2fe894.wav",
+  "Dès que le ballon bouge, les milieux excentrés ouvrent la largeur et toute l’équipe coulisse ensemble pour offrir plusieurs solutions au porteur.": "audio/ba9c5e89f59ef49b87d19939aebb747aa4e3e710dc19696dfe4d0a32ab0e9a86.wav",
+  "Défensivement, la distance minimale entre nos deux centraux correspond à la largeur du but à sept. Dès que le gardien a le ballon, DG et DD s’écartent pour ouvrir des angles de relance.": "audio/d18556201bb81cdc713881f8cd82bef1de4f5f8cac5d3f9153b0dff39891eacd.wav",
+  "Les excentrés donnent la largeur sur les lignes pendant que le milieu six se rapproche dans l’intervalle. Le gardien relance proprement sur le défenseur droit face au jeu.": "audio/0de03d01be4a9927a9c36a0aaf7192052b05baf65b3d03078817e42cdfd96dd1.wav",
+  "Le défenseur droit trouve le six entre les deux premiers attaquants adverses, puis poursuit sa course pour rester disponible. Une passe, un déplacement, une nouvelle solution.": "audio/157eca46322fe9de871ef2fee10375135b9a242dfd16efa1cc92955ec8e4f63e.wav",
+  "Quand le ballon arrive dans le couloir adverse, le joueur le plus proche sort immédiatement cadrer le porteur sur sa prise de balle, en orientant son corps de profil.": "audio/e15c8ea517f632a2663ebf0de35e66bea9bd70942d28b167ae4898bdf49a7776.wav",
+  "Derrière lui, le défenseur droit et le six ne restent jamais sur la même ligne : ils se placent légèrement derrière, en couverture, avec vision périphérique sur le ballon, l’adversaire et le partenaire.": "audio/6b96dcd1c786c54c90d2171b997176f59e696a342d9f6f7785e08a73e7fcb29b.wav",
+  "L’attaquant ferme la passe en retrait et le six verrouille l’intérieur. Le triangle défensif oblige l’adversaire à jouer sur le côté ou vers l’arrière.": "audio/96a6bcd2c4f2fe4e5771876ec2ca6f690830f41d3fc4d32cf437e00f8e489e71.wav",
+  "Lorsque l’adversaire porte le ballon à droite, tout notre bloc coulisse pour occuper les trois quarts du terrain. À l’opposé, le milieu gauche reste à hauteur entre milieu et attaquant pour garder une menace de contre.": "audio/129e37be3eab230ea796661bb9b7f5be7b250a866d42f78fbd05dd1f36b39416.wav",
+  "Si l’adversaire renverse vers notre gauche, les huit joueurs coulissent en même temps pour fermer le nouveau couloir fort et protéger l’axe central.": "audio/368d9c913df9c10a9d7a3713a58ec305aa6f3e68f5eab96586585f0431c49edf.wav",
+  "Si l’adversaire progresse jusque devant notre ligne défensive en Z1, l’excentré opposé descend à hauteur des défenseurs centraux pour fermer le second poteau.": "audio/416c67a16f9be8c6ea78e83cd96f1e3b8c42934e047243756858d8c296f8d3d8.wav",
+  "En phase offensive, le 2-4-1 crée des triangles autour du porteur. Le défenseur droit fixe puis trouve l’excentré droit pour attirer le bloc adverse dans ce couloir.": "audio/1799f0c2ba3f40eb52934c4cf1b0bcccc603e84620ec9f89c9f4e18c93954a51.wav",
+  "Dès que le couloir est fermé, l’excentré ressort sur le six en soutien qui renverse rapidement vers l’espace libéré pour le milieu gauche lancé.": "audio/6ac84a31292ca541de0b90ee86dba033bd46fa94339c9e86be2604cf56bed18a.wav",
+  "Le milieu huit se projette vers l’attaquant pour combiner à trois, tandis que le six et nos deux centraux assurent l’équilibre deux plus un derrière l’action.": "audio/05e1e7143410e3dde065d224ebe68abdd381d657cbf8302164b1539a3fbb8b09.wav",
+  "Dès que notre excentré droit prend le couloir en Z3 avec la possibilité de centrer, le déclenchement devant le but s’organise à trois.": "audio/43eae3c33866d4e368b071950cfd3208e80662c23f368740330675878dde822f.wav",
+  "L’attaquant croise au premier poteau, l’excentré opposé rentre à l’intérieur vers le deuxième poteau, et le milieu huit arrive en retrait pour former le triangle d’attaque à trois.": "audio/ad168fae0d87a6010368148dd11b2402e43d362dd31c314da3d6659b34b80f79.wav",
+  "Peu importe qui occupe chaque pointe du triangle : l’essentiel est d’avoir deux présences dans les six mètres, un retrait pour les ballons repoussés, et nos trois joueurs derrière pour sécuriser.": "audio/d635300cf10d744ea67ab005978aa142e90c9d34027e494720f71701ad0c48b9.wav",
+  "À la récupération du ballon par le six, c’est l’ÉLAN ! E comme Élargir au maximum : nos excentrés ouvrent les couloirs et nos défenseurs s’écartent immédiatement.": "audio/3e2e2fdd842d43a098ec0db8a941bec6b20b3c0039f17d2e8a06c5e103d7384f.wav",
+  "L comme Libérer le ballon au bon moment : on sort de la densité adverse par une passe propre vers le côté ouvert.": "audio/7a5799bfd4258f2461ecdda9ad38c5e59704004f897619eb61f8c38ef6fa4ed5.wav",
+  "A comme Avancer et progresser : on trouve le huit entre les lignes qui se retourne pour lancer l’attaquant dans la profondeur.": "audio/fa084842681bdeca6b367eeb60631a2c2c195c8dc179bca6fc8132506289cc23.wav",
+  "N comme Ne pas s’enfermer : le bloc garde toujours une solution en soutien et le côté opposé disponible pour renverser si besoin.": "audio/86d438025cc553d851949f2385949f6f5edf40e3bd9e811aaa88fff4eb1965ff.wav",
+  "Perte de balle ! C’est le signal STOP. S comme Se resserrer immédiatement : tout le monde se rapproche du ballon au lieu de regarder l’action.": "audio/6699e2c364516960e4d808b1db0091443aa4a28916fde9197284f2df10c3356d.wav",
+  "T comme Trois secondes de pressing : le joueur le plus proche monte cadrer pendant que ses partenaires coupent les lignes de passe — O — pour tenter de récupérer tout de suite.": "audio/9fb1fbbb9b31a891481eb90431cb702411ecfb2f57206f35158187be74f1e050.wav",
+  "P pour Protéger l’axe : si l’adversaire échappe au pressing après trois secondes, on ne se jette plus, tout le bloc se replace compact dans l’axe.": "audio/dfd3c3afaead14a05e74df4a00b630931c953b2d054e08a656b2191e4ced4c9d.wav",
+  "Sur touche, on applique la règle pédagogique de quatre : se placer à quatre mètres du porteur, lui proposer quatre solutions et jouer en moins de quatre secondes. Quatre joueurs forment d’abord un carré.": "audio/306d17f1f0f0608edcd4f5c64cb076186cc1220d597b7fe9c128d903f881c6aa.wav",
+  "Par rotation horaire ou contre-horaire, le carré devient un losange : en logique de tiroir, l’attaquant plonge libérer un espace pendant que le huit vient proposer en soutien.": "audio/2e6acc4a7e6d11feb6fae4522d1ce0f42bd3785e43ec4c2869f4793fb87e7825.wav",
+  "Si l’avant est bloqué, on peut aussi jouer en sécurité sur le défenseur droit et utiliser le rôle actif du gardien pour ressortir vers le côté opposé.": "audio/9b4786e8b366a00ce9966ad643f3a0834efb99d8da80f26e10fd5aed4ba77aee.wav"
+};
+    function speakText(text) {
+      stopSpeech();
+      const generation = state.speechGeneration;
+      if (!state.voiceEnabled) return;
+      const file = OFFLINE_AUDIO[text];
+      if (!file) {
+        state.narrationFinished = true;
+        updateVoiceBadge('Narration introuvable dans le pack', false);
+        return;
+      }
+      state.narrationFinished = false;
+      const player = window.phononAudioPlayer || new Audio();
+      window.phononAudioPlayer = player;
+      state.audioElement = player;
+      player.preload = 'auto';
+      player.src = file;
+      player.playbackRate = state.speed;
+      updateVoiceBadge('Augustin — chargement du fichier…', false);
+      player.onplaying = () => {
+        if (generation === state.speechGeneration)
+          updateVoiceBadge('Augustin — narration en cours…', true);
+      };
+      player.onended = () => {
+        if (generation !== state.speechGeneration) return;
+        state.narrationFinished = true;
+        updateVoiceBadge('Voix-off prête', false);
+      };
+      player.onerror = () => {
+        if (generation !== state.speechGeneration) return;
+        state.narrationFinished = true;
+        updateVoiceBadge('Audio manquant : vérifier installation', false);
+      };
+      player.play().catch(err => {
+        if (generation !== state.speechGeneration) return;
+        state.narrationFinished = true;
+        updateVoiceBadge('Audio bloqué — toucher ce badge', false);
+        console.error('Lecture Augustin :', err);
+      });
+    }
+
+    /* SVG Rendering Helpers */
+    function elSvg(tag, attrs) {
+      const node = document.createElementNS(SVG_NS, tag);
+      for (const [k, v] of Object.entries(attrs)) {
+        node.setAttribute(k, String(v));
+      }
+      return node;
+    }
+
+    function renderGuides(guides) {
+      const container = document.getElementById(`layer-tactical-guides`);
+      const hud = document.getElementById(`layer-hud`);
+      if (!container || !hud) return;
+      container.innerHTML = ``;
+      hud.innerHTML = ``;
+      if (!state.layers.vectors || !guides) return;
+
+      for (const g of guides) {
+        if (g.type === `spine`) {
+          const pts = `76,270 205,198 345,250 450,295 600,270`;
+          container.appendChild(elSvg(`polyline`, {
+            points: pts,
+            fill: `none`,
+            stroke: `var(--vector-pass)`,
+            'stroke-width': `1.5`,
+            'stroke-dasharray': `5 5`,
+            opacity: `0.65`
+          }));
+        } else if (g.type === `width`) {
+          container.appendChild(elSvg(`line`, {
+            x1: g.from[0], y1: g.from[1], x2: g.to[0], y2: g.to[1],
+            stroke: `var(--vector-run)`, 'stroke-width': `2`, 'stroke-dasharray': `6 4`
+          }));
+          const txt = elSvg(`text`, {
+            x: g.from[0] + 12, y: 270,
+            fill: `var(--vector-run)`, 'font-family': `var(--font-label)`, 'font-size': `11`, 'font-weight': `600`
+          });
+          txt.textContent = g.label;
+          container.appendChild(txt);
+        } else if (g.type === `pass`) {
+          container.appendChild(elSvg(`line`, {
+            x1: g.from[0], y1: g.from[1], x2: g.to[0], y2: g.to[1],
+            stroke: `var(--vector-pass)`, 'stroke-width': `2.2`,
+            'marker-end': `url(#arrow-pass)`
+          }));
+        } else if (g.type === `run`) {
+          container.appendChild(elSvg(`line`, {
+            x1: g.from[0], y1: g.from[1], x2: g.to[0], y2: g.to[1],
+            stroke: `var(--vector-run)`, 'stroke-width': `2`, 'stroke-dasharray': `5 4`,
+            'marker-end': `url(#arrow-run)`
+          }));
+        } else if (g.type === `pressArrow`) {
+          container.appendChild(elSvg(`line`, {
+            x1: g.from[0], y1: g.from[1], x2: g.to[0], y2: g.to[1],
+            stroke: `var(--vector-press)`, 'stroke-width': `2.4`,
+            'marker-end': `url(#arrow-press)`
+          }));
+        } else if (g.type === `triangle`) {
+          const ptsStr = g.pts.map(p => `${p[0]},${p[1]}`).join(` `);
+          container.appendChild(elSvg(`polygon`, {
+            points: ptsStr,
+            fill: `var(--zone-fill-cyan)`,
+            stroke: `var(--vector-pass)`,
+            'stroke-width': `1.5`,
+            'stroke-dasharray': `4 4`
+          }));
+        } else if (g.type === `attackTriangle`) {
+          const ptsStr = g.pts.map(p => `${p[0]},${p[1]}`).join(` `);
+          container.appendChild(elSvg(`polygon`, {
+            points: ptsStr,
+            fill: `var(--zone-fill-sage)`,
+            stroke: `var(--vector-run)`,
+            'stroke-width': `2`
+          }));
+          const cx = (g.pts[0][0] + g.pts[1][0] + g.pts[2][0]) / 3;
+          const cy = (g.pts[0][1] + g.pts[1][1] + g.pts[2][1]) / 3;
+          const lbl = elSvg(`text`, {
+            x: cx - 32, y: cy - 48,
+            fill: `var(--vector-run)`, 'font-family': `var(--font-label)`, 'font-size': `11`, 'font-weight': `700`
+          });
+          lbl.textContent = g.label;
+          container.appendChild(lbl);
+        } else if (g.type === `defTriangle`) {
+          const ptsStr = g.pts.map(p => `${p[0]},${p[1]}`).join(` `);
+          container.appendChild(elSvg(`polygon`, {
+            points: ptsStr,
+            fill: `var(--zone-fill-coral)`,
+            stroke: `var(--vector-press)`,
+            'stroke-width': `1.8`
+          }));
+        } else if (g.type === `goalBracket`) {
+          container.appendChild(elSvg(`line`, {
+            x1: g.x - 22, y1: g.y1, x2: g.x - 22, y2: g.y2,
+            stroke: `var(--vector-warn)`, 'stroke-width': `2.2`
+          }));
+          container.appendChild(elSvg(`line`, { x1: g.x - 28, y1: g.y1, x2: g.x - 16, y2: g.y1, stroke: `var(--vector-warn)`, 'stroke-width': `2` }));
+          container.appendChild(elSvg(`line`, { x1: g.x - 28, y1: g.y2, x2: g.x - 16, y2: g.y2, stroke: `var(--vector-warn)`, 'stroke-width': `2` }));
+          const lbl = elSvg(`text`, {
+            x: g.x + 12, y: (g.y1 + g.y2) / 2 + 4,
+            fill: `var(--vector-warn)`, 'font-family': `var(--font-label)`, 'font-size': `11`, 'font-weight': `600`
+          });
+          lbl.textContent = g.label;
+          container.appendChild(lbl);
+        } else if (g.type === `coverLine`) {
+          const ptsStr = g.pts.map(p => `${p[0]},${p[1]}`).join(` `);
+          container.appendChild(elSvg(`polyline`, {
+            points: ptsStr, fill: `none`, stroke: `var(--vector-warn)`, 'stroke-width': `2`, 'stroke-dasharray': `4 4`
+          }));
+          const lbl = elSvg(`text`, {
+            x: g.pts[1][0] - 88, y: g.pts[1][1] - 18,
+            fill: `var(--vector-warn)`, 'font-family': `var(--font-label)`, 'font-size': `11`, 'font-weight': `600`
+          });
+          lbl.textContent = g.label;
+          container.appendChild(lbl);
+        } else if (g.type === `blockLane`) {
+          container.appendChild(elSvg(`line`, {
+            x1: g.from[0], y1: g.from[1], x2: g.to[0], y2: g.to[1],
+            stroke: `var(--vector-press)`, 'stroke-width': `2`, 'stroke-dasharray': `3 5`, opacity: `0.8`
+          }));
+          const mx = (g.from[0] + g.to[0]) / 2;
+          const my = (g.from[1] + g.to[1]) / 2;
+          container.appendChild(elSvg(`line`, { x1: mx - 6, y1: my - 6, x2: mx + 6, y2: my + 6, stroke: `var(--vector-press)`, 'stroke-width': `2.2` }));
+          container.appendChild(elSvg(`line`, { x1: mx + 6, y1: my - 6, x2: mx - 6, y2: my + 6, stroke: `var(--vector-press)`, 'stroke-width': `2.2` }));
+        } else if (g.type === `band34`) {
+          container.appendChild(elSvg(`rect`, {
+            x: 54, y: g.yTop, width: 792, height: g.yBot - g.yTop,
+            fill: `var(--zone-fill-sage)`, stroke: `var(--vector-run)`, 'stroke-width': `1.2`, 'stroke-dasharray': `6 4`
+          }));
+          const lbl = elSvg(`text`, {
+            x: 70, y: g.yTop + 18,
+            fill: `var(--vector-run)`, 'font-family': `var(--font-label)`, 'font-size': `11`, 'font-weight': `600`
+          });
+          lbl.textContent = g.label;
+          container.appendChild(lbl);
+        } else if (g.type === `heightLink`) {
+          const ptsStr = g.pts.map(p => `${p[0]},${p[1]}`).join(` `);
+          container.appendChild(elSvg(`polyline`, {
+            points: ptsStr, fill: `none`, stroke: `var(--vector-warn)`, 'stroke-width': `1.5`, 'stroke-dasharray': `4 4`
+          }));
+        } else if (g.type === `pressRing`) {
+          container.appendChild(elSvg(`circle`, {
+            cx: g.cx, cy: g.cy, r: g.r,
+            fill: `var(--zone-fill-coral)`, stroke: `var(--vector-press)`, 'stroke-width': `1.8`, 'stroke-dasharray': `5 4`
+          }));
+        } else if (g.type === `throwShape`) {
+          const ptsStr = g.pts.map(p => `${p[0]},${p[1]}`).join(` `);
+          container.appendChild(elSvg(`polygon`, {
+            points: ptsStr, fill: `var(--zone-fill-amber)`, stroke: `var(--vector-warn)`, 'stroke-width': `1.8`, 'stroke-dasharray': `5 4`
+          }));
+          const lbl = elSvg(`text`, {
+            x: g.pts[0][0] - 4, y: g.pts[0][1] - 18,
+            fill: `var(--vector-warn)`, 'font-family': `var(--font-label)`, 'font-size': `11`, 'font-weight': `700`
+          });
+          lbl.textContent = g.label;
+          container.appendChild(lbl);
+        } else if (g.type === `hudTag`) {
+          const fillTone = g.tone === `coral` ? `var(--zone-fill-coral)` : g.tone === `sage` ? `var(--zone-fill-sage)` : g.tone === `warn` ? `var(--zone-fill-amber)` : `var(--zone-fill-cyan)`;
+          const strokeTone = g.tone === `coral` ? `var(--vector-press)` : g.tone === `sage` ? `var(--vector-run)` : g.tone === `warn` ? `var(--vector-warn)` : `var(--vector-pass)`;
+          hud.appendChild(elSvg(`rect`, {
+            x: 62, y: 56, width: 292, height: 28, rx: 6,
+            fill: fillTone, stroke: strokeTone, 'stroke-width': `1.5`
+          }));
+          const txt = elSvg(`text`, {
+            x: 74, y: 74,
+            fill: strokeTone, 'font-family': `var(--font-label)`, 'font-size': `11.5`, 'font-weight': `700`
+          });
+          txt.textContent = g.text;
+          hud.appendChild(txt);
+        }
+      }
+    }
+
+    function renderPitch() {
+      const seq = getCurrentSeq();
+      const frame = getInterpolatedFrame(seq, state.progress);
+      if (!frame) return;
+
+      const activePlayers = state.freeboardMode && state.freePositions ? state.freePositions : frame.players;
+
+      const zonesLayer = document.getElementById(`layer-zones`);
+      if (zonesLayer) zonesLayer.style.display = state.layers.zones ? `block` : `none`;
+
+      renderGuides(state.freeboardMode ? [] : frame.guides);
+
+      /* Opponents */
+      const oppLayer = document.getElementById(`layer-opponents`);
+      if (oppLayer) {
+        oppLayer.innerHTML = ``;
+        oppLayer.style.display = state.layers.opponents ? `block` : `none`;
+        frame.opp.forEach((pos, idx) => {
+          const grp = elSvg(`g`, { transform: `translate(${pos[0]}, ${pos[1]})` });
+          grp.appendChild(elSvg(`circle`, {
+            cx: 0, cy: 0, r: 14,
+            fill: `var(--token-opp)`, stroke: `var(--token-opp-ink)`, 'stroke-width': `2`
+          }));
+          const txt = elSvg(`text`, { x: 0, y: 0, class: `opp-label`, fill: `var(--token-opp-ink)` });
+          txt.textContent = idx === 0 ? `GA` : `A${idx + 1}`;
+          grp.appendChild(txt);
+          oppLayer.appendChild(grp);
+        });
+      }
+
+      /* 2-4-1 Team Tokens */
+      const teamLayer = document.getElementById(`layer-team`);
+      if (teamLayer) {
+        teamLayer.innerHTML = ``;
+        TOKEN_META.forEach(meta => {
+          const pos = activePlayers[meta.id] || [450, 270];
+          const isSelected = state.selectedRoleId === meta.id;
+          const grp = elSvg(`g`, {
+            transform: `translate(${pos[0]}, ${pos[1]})`,
+            class: `token-group${state.freeboardMode ? ` draggable` : ``}`,
+            'data-token-id': meta.id
+          });
+
+          if (isSelected) {
+            grp.appendChild(elSvg(`circle`, {
+              cx: 0, cy: 0, r: 22,
+              fill: `none`, stroke: `var(--on-surface)`, 'stroke-width': `2`, 'stroke-dasharray': `3 3`
+            }));
+          }
+
+          grp.appendChild(elSvg(`circle`, {
+            cx: 0, cy: 0, r: 17,
+            class: `token-circle`,
+            fill: meta.isGK ? `var(--token-gk)` : `var(--token-team)`,
+            stroke: meta.isGK ? `var(--token-gk-ink)` : `var(--token-team-ink)`,
+            'stroke-width': `2.2`
+          }));
+
+          const lbl = elSvg(`text`, {
+            x: 0, y: 0, class: `token-label`,
+            fill: meta.isGK ? `var(--token-gk-ink)` : `var(--token-team-ink)`
+          });
+          lbl.textContent = meta.id;
+          grp.appendChild(lbl);
+
+          grp.addEventListener(`pointerdown`, ev => onTokenPointerDown(ev, meta.id));
+          grp.addEventListener(`click`, () => selectRole(meta.id, true));
+          teamLayer.appendChild(grp);
+        });
+      }
+
+      /* Ball */
+      const ballCircle = document.getElementById(`ball-circle`);
+      const ballShadow = document.getElementById(`ball-shadow`);
+      if (ballCircle && ballShadow) {
+        ballCircle.setAttribute(`cx`, frame.ball[0]);
+        ballCircle.setAttribute(`cy`, frame.ball[1]);
+        ballShadow.setAttribute(`cx`, frame.ball[0] + 2);
+        ballShadow.setAttribute(`cy`, frame.ball[1] + 4);
+      }
+
+      /* Scrubber & Timecode */
+      const scrubber = document.getElementById(`timeline-scrubber`);
+      if (scrubber) scrubber.value = String(Math.round(state.progress * 1000));
+      const tc = document.getElementById(`timecode-display`);
+      if (tc) tc.textContent = `${formatTime(state.progress * seq.duration)} / ${formatTime(seq.duration)}`;
+
+      /* Live Cue Sync */
+      const cueIdx = getActiveCueIndex(seq, state.progress);
+      if (cueIdx !== state.lastCueIndex) {
+        state.lastCueIndex = cueIdx;
+        syncCueHighlight(seq, cueIdx);
+        if (state.isPlaying && state.voiceEnabled) {
+          speakText(seq.cues[cueIdx].speech);
+        }
+      }
+    }
+
+    function syncCueHighlight(seq, cueIdx) {
+      const cue = seq.cues[cueIdx];
+      if (!cue) return;
+      const lbl = document.getElementById(`subtitle-phase-label`);
+      const txt = document.getElementById(`subtitle-text`);
+      if (lbl) lbl.textContent = cue.label;
+      if (txt) txt.textContent = cue.speech;
+
+      const cueItems = document.querySelectorAll(`.cue-item`);
+      cueItems.forEach((el, i) => el.classList.toggle(`active`, i === cueIdx));
+      const tickBtns = document.querySelectorAll(`.cue-tick-btn`);
+      tickBtns.forEach((el, i) => el.classList.toggle(`active`, i === cueIdx));
+    }
+
+    /* Animation Loop */
+  
+    function animationStep(ts) {
+      if (!state.isPlaying) return;
+
+      if (state.lastFrameTs === null) {
+        state.lastFrameTs = ts;
+      }
+
+      const dt = Math.min(
+        0.1,
+        (ts - state.lastFrameTs) / 1000
+      );
+
+      state.lastFrameTs = ts;
+
+      const seq = getCurrentSeq();
+      const cueIdx = getActiveCueIndex(seq, state.progress);
+      const cue = seq.cues[cueIdx];
+
+      const deltaProgress =
+        (dt * state.speed) / seq.duration;
+
+      let nextProgress = state.progress + deltaProgress;
+
+      // Vérifier si la synthèse vocale est active
+      const voiceActive = state.voiceEnabled;
+
+      // Attendre la fin complète de la narration
+      // avant de passer à la phase suivante
+      if (
+        voiceActive &&
+        !state.narrationFinished &&
+        cue
+      ) {
+        nextProgress = Math.min(
+          nextProgress,
+          cue.tEnd - 0.000001
+        );
+      }
+
+      state.progress = nextProgress;
+
+      // Fin de la séquence
+      if (state.progress >= 1) {
+
+        if (state.loopMode === `sequence`) {
+          state.progress = 0;
+          state.lastCueIndex = -1;
+
+        } else {
+
+          if (state.currentSeqIndex < SEQUENCES.length - 1) {
+            selectSequence(
+              state.currentSeqIndex + 1,
+              true
+            );
+            return;
+
+          } else {
+            state.progress = 0;
+            state.lastCueIndex = -1;
+          }
+        }
+      }
+
+      // Limite les reconstructions SVG sur mobile à ~25 images/s.
+      // Lors d'une attente audio, le terrain reste identique : inutile de rerendre.
+      if (state.lastRenderedProgress !== state.progress &&
+          (state.lastRenderTs === undefined || ts - state.lastRenderTs >= 40 || state.progress >= 1)) {
+        renderPitch();
+        state.lastRenderTs = ts;
+        state.lastRenderedProgress = state.progress;
+      }
+
+      // Continuer l'animation
+      state.rafId = requestAnimationFrame(animationStep);
+    }
+
+    function startPlayback() {
+      primeMobileAudio();
+      if (state.freeboardMode) toggleFreeboard(false);
+      state.isPlaying = true;
+      state.lastFrameTs = null;
+      state.lastRenderTs = undefined;
+      state.lastRenderedProgress = undefined;
+      updatePlayPauseUI();
+      const seq = getCurrentSeq();
+      const cueIdx = getActiveCueIndex(seq, state.progress);
+      state.lastCueIndex = cueIdx;
+      syncCueHighlight(seq, cueIdx);
+      if (state.voiceEnabled) speakText(seq.cues[cueIdx].speech);
+      if (state.rafId) cancelAnimationFrame(state.rafId);
+      state.rafId = requestAnimationFrame(animationStep);
+    }
+
+    function pausePlayback() {
+      state.isPlaying = false;
+      state.lastFrameTs = null;
+      if (state.rafId) {
+        cancelAnimationFrame(state.rafId);
+        state.rafId = null;
+      }
+      stopSpeech();
+      updatePlayPauseUI();
+    }
+
+    function updatePlayPauseUI() {
+      const iconPlay = document.getElementById(`icon-play`);
+      const iconPause = document.getElementById(`icon-pause`);
+      const label = document.getElementById(`play-label`);
+      if (iconPlay) iconPlay.hidden = state.isPlaying;
+      if (iconPause) iconPause.hidden = !state.isPlaying;
+      if (label) label.textContent = state.isPlaying ? `Pause` : `Lecture`;
+    }
+
+    /* User Controls (hoisted functions) */
+    function togglePlayPause() {
+      if (state.isPlaying) pausePlayback();
+      else startPlayback();
+    }
+
+    function prevSequence() {
+      const idx = state.currentSeqIndex > 0 ? state.currentSeqIndex - 1 : SEQUENCES.length - 1;
+      selectSequence(idx, state.isPlaying);
+    }
+
+    function nextSequence() {
+      const idx = state.currentSeqIndex < SEQUENCES.length - 1 ? state.currentSeqIndex + 1 : 0;
+      selectSequence(idx, state.isPlaying);
+    }
+
+    function setPlaybackSpeed(val) {
+      state.speed = parseFloat(val) || 1;
+      if (state.audioElement) state.audioElement.playbackRate = state.speed;
+      saveAppState();
+    }
+
+    function toggleLoop() {
+      state.loopMode = state.loopMode === `sequence` ? `all` : `sequence`;
+      const btn = document.getElementById(`btn-loop`);
+      const lbl = document.getElementById(`loop-label`);
+      if (btn) btn.setAttribute(`aria-pressed`, `true`);
+      if (lbl) lbl.textContent = state.loopMode === `sequence` ? `Boucle : Séq.` : `Boucle : Tout`;
+      saveAppState();
+    }
+
+    function toggleVoice() {
+      state.voiceEnabled = !state.voiceEnabled;
+      const btn = document.getElementById(`btn-voice`);
+      const lbl = document.getElementById(`voice-label`);
+      if (btn) {
+        btn.setAttribute(`aria-pressed`, String(state.voiceEnabled));
+        btn.classList.toggle(`btn-active`, state.voiceEnabled);
+      }
+      if (lbl) lbl.textContent = state.voiceEnabled ? `Voix-off : ON` : `Voix-off : OFF`;
+      if (!state.voiceEnabled) {
+        stopSpeech();
+      } else {
+        updateVoiceBadge(`Voix-off prête`, false);
+        if (state.isPlaying) {
+          const seq = getCurrentSeq();
+          const cueIdx = getActiveCueIndex(seq, state.progress);
+          speakText(seq.cues[cueIdx].speech);
+        }
+      }
+      saveAppState();
+    }
+
+    function setSelectedVoice(uri) {
+      state.selectedVoiceURI = uri;
+      saveAppState();
+    }
+
+    function onScrubInput(val) {
+      stopSpeech();
+      const num = clamp(Number(val) / 1000, 0, 1);
+      state.progress = num;
+      const seq = getCurrentSeq();
+      const cueIdx = getActiveCueIndex(seq, state.progress);
+      state.lastCueIndex = cueIdx;
+      syncCueHighlight(seq, cueIdx);
+      renderPitch();
+      if (state.isPlaying && state.voiceEnabled) speakText(seq.cues[cueIdx].speech);
+    }
+
+    function jumpToCue(cueIndex) {
+      primeMobileAudio();
+      const seq = getCurrentSeq();
+      const cue = seq.cues[cueIndex];
+      if (!cue) return;
+      if (state.freeboardMode) toggleFreeboard(false);
+      state.progress = cue.tStart + 0.001;
+      state.lastCueIndex = cueIndex;
+      syncCueHighlight(seq, cueIndex);
+      renderPitch();
+      if (state.voiceEnabled) speakText(cue.speech);
+    }
+
+    function toggleLayer(name) {
+      state.layers[name] = !state.layers[name];
+      const btn = document.getElementById(`btn-layer-${name}`);
+      if (btn) btn.setAttribute(`aria-pressed`, String(state.layers[name]));
+      renderPitch();
+    }
+
+    function toggleFreeboard(forceVal) {
+      const next = typeof forceVal === `boolean` ? forceVal : !state.freeboardMode;
+      state.freeboardMode = next;
+      const btn = document.getElementById(`btn-mode-free`);
+      const actions = document.getElementById(`freeboard-actions`);
+      if (btn) btn.setAttribute(`aria-pressed`, String(next));
+      if (actions) actions.hidden = !next;
+
+      if (next) {
+        pausePlayback();
+        const frame = getInterpolatedFrame(getCurrentSeq(), state.progress);
+        state.freePositions = {};
+        for (const meta of TOKEN_META) {
+          const p = frame.players[meta.id] || [450, 270];
+          state.freePositions[meta.id] = [p[0], p[1]];
+        }
+      } else {
+        state.freePositions = null;
+      }
+      renderPitch();
+    }
+
+    function resetFreeboard() {
+      if (!state.freeboardMode) return;
+      const frame = getInterpolatedFrame(getCurrentSeq(), state.progress);
+      state.freePositions = {};
+      for (const meta of TOKEN_META) {
+        const p = frame.players[meta.id] || [450, 270];
+        state.freePositions[meta.id] = [p[0], p[1]];
+      }
+      renderPitch();
+    }
+
+    /* Dragging in Freeboard Mode */
+    function clientToSvgCoords(clientX, clientY) {
+      const svg = document.getElementById(`pitch-svg`);
+      if (!svg) return [450, 270];
+      const rect = svg.getBoundingClientRect();
+      const x = ((clientX - rect.left) / rect.width) * 900;
+      const y = ((clientY - rect.top) / rect.height) * 540;
+      return [clamp(x, 55, 845), clamp(y, 50, 490)];
+    }
+
+    function onTokenPointerDown(ev, tokenId) {
+      if (!state.freeboardMode) return;
+      ev.preventDefault();
+      state.draggingId = tokenId;
+      selectRole(tokenId, false);
+    }
+
+    window.addEventListener(`pointermove`, ev => {
+      if (!state.freeboardMode || !state.draggingId || !state.freePositions) return;
+      const [x, y] = clientToSvgCoords(ev.clientX, ev.clientY);
+      state.freePositions[state.draggingId] = [x, y];
+      renderPitch();
+    });
+
+    window.addEventListener(`pointerup`, () => {
+      state.draggingId = null;
+    });
+
+    /* Sequence Selection & UI Rendering */
+    function selectSequence(index, autoPlay) {
+      const wasPlaying = Boolean(autoPlay);
+      pausePlayback();
+      state.currentSeqIndex = clamp(index, 0, SEQUENCES.length - 1);
+      state.progress = 0;
+      state.lastCueIndex = -1;
+      state.freeboardMode = false;
+      state.freePositions = null;
+
+      const freeBtn = document.getElementById(`btn-mode-free`);
+      const freeAct = document.getElementById(`freeboard-actions`);
+      if (freeBtn) freeBtn.setAttribute(`aria-pressed`, `false`);
+      if (freeAct) freeAct.hidden = true;
+
+      renderSequenceStrip();
+      renderDossierContent();
+      renderPitch();
+      saveAppState();
+
+      if (wasPlaying) startPlayback();
+    }
+
+    function renderSequenceStrip() {
+      const strip = document.getElementById(`sequence-strip`);
+      const counter = document.getElementById(`active-seq-counter`);
+      if (counter) counter.textContent = `Séquence ${getCurrentSeq().code} / 0${SEQUENCES.length}`;
+      if (!strip) return;
+      strip.innerHTML = ``;
+
+      SEQUENCES.forEach((seq, idx) => {
+        const isMastered = state.masteredIds.includes(seq.id);
+        const btn = document.createElement(`button`);
+        btn.type = `button`;
+        btn.className = `seq-card`;
+        btn.setAttribute(`aria-current`, String(idx === state.currentSeqIndex));
+        btn.onclick = () => selectSequence(idx, false);
+        btn.innerHTML = `
+          <div class="seq-card-top">
+            <span class="seq-num">${seq.code}</span>
+            <span class="seq-status-dot${isMastered ? ` mastered` : ``}">${isMastered ? `Acquise` : `${seq.duration}s`}</span>
+          </div>
+          <span class="seq-title">${seq.title}</span>
+          <span class="seq-cat">${seq.category}</span>
+        `;
+        strip.appendChild(btn);
+      });
+
+      const masteredMetric = document.getElementById(`metric-mastered`);
+      if (masteredMetric) masteredMetric.textContent = `${state.masteredIds.length} / ${SEQUENCES.length}`;
+    }
+
+    function renderDossierContent() {
+      const seq = getCurrentSeq();
+      const catEl = document.getElementById(`player-category`);
+      const titleEl = document.getElementById(`player-title`);
+      const objEl = document.getElementById(`seq-objective`);
+      if (catEl) catEl.textContent = seq.category;
+      if (titleEl) titleEl.textContent = `${seq.code}. ${seq.title}`;
+      if (objEl) objEl.textContent = seq.objective;
+
+      /* Cues in side panel + timeline quick-jump buttons */
+      const cueList = document.getElementById(`cue-list`);
+      const cueTicks = document.getElementById(`cue-ticks`);
+      if (cueList) cueList.innerHTML = ``;
+      if (cueTicks) {
+        cueTicks.innerHTML = ``;
+        cueTicks.style.gridTemplateColumns = `repeat(${seq.cues.length}, minmax(0, 1fr))`;
+      }
+
+      seq.cues.forEach((cue, i) => {
+        if (cueList) {
+          const item = document.createElement(`button`);
+          item.type = `button`;
+          item.className = `cue-item${i === 0 ? ` active` : ``}`;
+          item.onclick = () => jumpToCue(i);
+          item.innerHTML = `
+            <div class="cue-item-head">
+              <span class="cue-phase">${cue.label}</span>
+              <span class="cue-time">${formatTime(cue.tStart * seq.duration)}</span>
+            </div>
+            <p class="cue-speech">${cue.speech}</p>
+          `;
+          cueList.appendChild(item);
+        }
+        if (cueTicks) {
+          const tBtn = document.createElement(`button`);
+          tBtn.type = `button`;
+          tBtn.className = `cue-tick-btn${i === 0 ? ` active` : ``}`;
+          tBtn.textContent = cue.label;
+          tBtn.onclick = () => jumpToCue(i);
+          cueTicks.appendChild(tBtn);
+        }
+      });
+
+      /* Verbatims */
+      const vList = document.getElementById(`verbatim-list`);
+      if (vList) {
+        vList.innerHTML = ``;
+        seq.verbatims.forEach(v => {
+          const card = document.createElement(`div`);
+          card.className = `verbatim-card`;
+          card.innerHTML = `
+            <p class="verbatim-quote">${v.quote}</p>
+            <span class="verbatim-origin">${v.origin}</span>
+          `;
+          vList.appendChild(card);
+        });
+      }
+
+      /* Key points */
+      const kpList = document.getElementById(`keypoints-list`);
+      if (kpList) {
+        kpList.innerHTML = ``;
+        seq.keypoints.forEach(kp => {
+          const li = document.createElement(`li`);
+          li.innerHTML = kp;
+          kpList.appendChild(li);
+        });
+      }
+
+      /* Nuance */
+      const nuanceBox = document.getElementById(`nuance-box`);
+      if (nuanceBox) {
+        nuanceBox.innerHTML = `<strong>Cadre méthodologique</strong>${seq.nuance}`;
+      }
+
+      /* Mastery & Notes */
+      const masteryTitle = document.getElementById(`mastery-seq-title`);
+      const masteryBtn = document.getElementById(`btn-toggle-mastery`);
+      const notesInput = document.getElementById(`coach-notes-input`);
+      const isMastered = state.masteredIds.includes(seq.id);
+      if (masteryTitle) masteryTitle.textContent = `${seq.code}. ${seq.title}`;
+      if (masteryBtn) {
+        masteryBtn.textContent = isMastered ? `Séquence acquise ✓` : `Marquer acquise`;
+        masteryBtn.classList.toggle(`btn-active`, isMastered);
+      }
+      if (notesInput) {
+        notesInput.value = state.notesBySeq[seq.id] || ``;
+      }
+
+      syncCueHighlight(seq, 0);
+    }
+
+    function switchDossierTab(tabName) {
+      state.activeDossierTab = tabName;
+      const tabs = [`tactics`, `roles`, `notebook`];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        const pnl = document.getElementById(`panel-${t}`);
+        if (btn) btn.setAttribute(`aria-selected`, String(t === tabName));
+        if (pnl) pnl.hidden = t !== tabName;
+      });
+    }
+
+    function selectRole(roleId, openTab) {
+      state.selectedRoleId = roleId;
+      renderRoleInspector();
+      renderPitch();
+      if (openTab && !state.freeboardMode) switchDossierTab(`roles`);
+    }
+
+    function renderRoleInspector() {
+      const grid = document.getElementById(`role-selector-grid`);
+      const detail = document.getElementById(`role-detail-card`);
+      if (grid) {
+        grid.innerHTML = ``;
+        TOKEN_META.forEach(m => {
+          const btn = document.createElement(`button`);
+          btn.type = `button`;
+          btn.className = `role-pill-btn`;
+          btn.setAttribute(`aria-pressed`, String(m.id === state.selectedRoleId));
+          btn.textContent = m.id;
+          btn.onclick = () => selectRole(m.id, false);
+          grid.appendChild(btn);
+        });
+      }
+
+      const role = TOKEN_META.find(m => m.id === state.selectedRoleId) || TOKEN_META[0];
+      if (detail) {
+        detail.innerHTML = `
+          <div class="role-detail-header">
+            <div>
+              <span class="data-label">${role.line}</span>
+              <h3 class="role-detail-title">${role.id} — ${role.name}</h3>
+            </div>
+            <button type="button" class="toggle-chip" onclick="speakRoleCue()">Écouter consigne</button>
+          </div>
+          <div class="role-grid-phases">
+            <div class="role-phase-block">
+              <span class="data-label" style="color: var(--primary);">Avec le ballon (ÉLAN)</span>
+              <p>${role.withBall}</p>
+            </div>
+            <div class="role-phase-block">
+              <span class="data-label" style="color: var(--data-4);">Sans le ballon (STOP &amp; Bloc)</span>
+              <p>${role.withoutBall}</p>
+            </div>
+            <div class="role-phase-block">
+              <span class="data-label" style="color: var(--tertiary);">Consigne terrain courte</span>
+              <p>« ${role.cuePhrase} »</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function speakRoleCue() {
+      primeMobileAudio();
+      const role = TOKEN_META.find(m => m.id === state.selectedRoleId);
+      if (!role) return;
+      if (state.isPlaying) pausePlayback();
+      speakText(`${role.name}. ${role.cuePhrase}`);
+    }
+
+    /* Mastery, Notes & Export */
+    function toggleCurrentMastery() {
+      const seq = getCurrentSeq();
+      const idx = state.masteredIds.indexOf(seq.id);
+      if (idx === -1) state.masteredIds.push(seq.id);
+      else state.masteredIds.splice(idx, 1);
+      renderSequenceStrip();
+      renderDossierContent();
+      saveAppState();
+    }
+
+    let notesTimer = null;
+    function onCoachNotesInput(val) {
+      const seq = getCurrentSeq();
+      state.notesBySeq[seq.id] = val;
+      const status = document.getElementById(`notes-save-status`);
+      if (status) status.textContent = `Enregistrement…`;
+      clearTimeout(notesTimer);
+      notesTimer = setTimeout(async () => {
+        await saveAppState();
+        if (status) status.textContent = `Notes enregistrées.`;
+      }, 300);
+    }
+
+    function resetProgress(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Confirmer réinitialisation`;
+        setTimeout(() => {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `Réinitialiser suivi`;
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `Réinitialiser suivi`;
+      state.masteredIds = [];
+      state.notesBySeq = {};
+      renderSequenceStrip();
+      renderDossierContent();
+      const status = document.getElementById(`notes-save-status`);
+      if (status) status.textContent = `Suivi réinitialisé.`;
+      saveAppState();
+    }
+
+    function exportSessionSummary() {
+      const lines = [
+        `FICHE DE FORMATION ÉDUCATEUR U12/U13 — SYSTÈME 2-4-1`,
+        `====================================================`,
+        `Séquences validées : ${state.masteredIds.length} / ${SEQUENCES.length}`,
+        ``
+      ];
+      SEQUENCES.forEach(s => {
+        const done = state.masteredIds.includes(s.id) ? `[ACQUISE]` : `[À TRAVAILLER]`;
+        const note = (state.notesBySeq[s.id] || ``).trim();
+        lines.push(`${s.code}. ${s.title} ${done}`);
+        lines.push(`   Objectif : ${s.objective}`);
+        if (note) lines.push(`   Notes terrain : ${note}`);
+        lines.push(``);
+      });
+      const content = lines.join(`\n`);
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: `fiche-formation-2-4-1-u12-u13.txt`
+        });
+      }
+    }
+
+    /* State Persistence via Gemini Notebook Shim API */
+    async function saveAppState() {
+      if (!window.notebookAppApi || typeof window.notebookAppApi.setAppState !== `function`) return;
+      try {
+        await window.notebookAppApi.setAppState({
+          currentSeqIndex: state.currentSeqIndex,
+          speed: state.speed,
+          loopMode: state.loopMode,
+          voiceEnabled: state.voiceEnabled,
+          selectedRoleId: state.selectedRoleId,
+          masteredIds: state.masteredIds,
+          notesBySeq: state.notesBySeq
+        });
+      } catch (e) {
+        /* ignore persistence error */
+      }
+    }
+
+    async function loadAppState() {
+      if (!window.notebookAppApi || typeof window.notebookAppApi.getAppState !== `function`) return;
+      try {
+        const saved = await window.notebookAppApi.getAppState();
+        if (saved && typeof saved === `object`) {
+          if (typeof saved.currentSeqIndex === `number`) state.currentSeqIndex = clamp(saved.currentSeqIndex, 0, SEQUENCES.length - 1);
+          if (typeof saved.speed === `number`) state.speed = saved.speed;
+          if (saved.loopMode === `all` || saved.loopMode === `sequence`) state.loopMode = saved.loopMode;
+          if (typeof saved.voiceEnabled === `boolean`) state.voiceEnabled = saved.voiceEnabled;
+          if (typeof saved.selectedRoleId === `string`) state.selectedRoleId = saved.selectedRoleId;
+          if (Array.isArray(saved.masteredIds)) state.masteredIds = saved.masteredIds;
+          if (saved.notesBySeq && typeof saved.notesBySeq === `object`) state.notesBySeq = saved.notesBySeq;
+        }
+      } catch (e) {
+        /* ignore load error */
+      }
+    }
+
+    /* Keyboard shortcut: Space for Play/Pause outside inputs */
+    window.addEventListener(`keydown`, ev => {
+      const tag = (ev.target && ev.target.tagName) ? ev.target.tagName.toLowerCase() : ``;
+      if (tag === `textarea` || tag === `input` || tag === `select`) return;
+      if (ev.code === `Space`) {
+        ev.preventDefault();
+        togglePlayPause();
+      } else if (ev.code === `ArrowRight`) {
+        nextSequence();
+      } else if (ev.code === `ArrowLeft`) {
+        prevSequence();
+      }
+    });
+
+    async function initApp() {
+      await loadAppState();
+      initVoices();
+      const badge = document.getElementById('voice-status-badge');
+      if (badge) {
+        badge.style.cursor = 'pointer';
+        badge.title = 'Toucher pour autoriser la lecture audio sur iPhone/iPad';
+        badge.addEventListener('click', retryBlockedAudio);
+      }
+
+      const speedSel = document.getElementById(`speed-select`);
+      if (speedSel) speedSel.value = String(state.speed);
+
+      const loopLbl = document.getElementById(`loop-label`);
+      if (loopLbl) loopLbl.textContent = state.loopMode === `sequence` ? `Boucle : Séq.` : `Boucle : Tout`;
+
+      const vBtn = document.getElementById(`btn-voice`);
+      const vLbl = document.getElementById(`voice-label`);
+      if (vBtn) {
+        vBtn.setAttribute(`aria-pressed`, String(state.voiceEnabled));
+        vBtn.classList.toggle(`btn-active`, state.voiceEnabled);
+      }
+      if (vLbl) vLbl.textContent = state.voiceEnabled ? `Voix-off : ON` : `Voix-off : OFF`;
+      updateVoiceBadge(state.voiceEnabled ? `Voix-off prête` : `Voix-off coupée`, false);
+
+      renderSequenceStrip();
+      renderDossierContent();
+      renderRoleInspector();
+      renderPitch();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && state.isPlaying) pausePlayback();
+    });
+    initApp();
+    async function verifyOfflineAudio() {
+      const status = document.getElementById('offline-status');
+      if (!status) return;
+      if (!('caches' in window) || !navigator.serviceWorker?.controller) {
+        status.textContent = 'Connexion hors ligne non activée : installation via HTTPS requise sur iPhone/iPad';
+        return;
+      }
+      try {
+        const manifest = await fetch('./narrations.json').then(r => r.json());
+        const cache = await caches.open('ardoise-augustin-autonome-v1');
+        let ready = 0;
+        for (const item of manifest.items) {
+          if (await cache.match('./' + item.file)) ready++;
+        }
+        status.textContent = ready === 28 ? 'Mode hors ligne prêt : 28/28 narrations Augustin' :
+          'Installation hors ligne en cours : ' + ready + '/28 narrations';
+      } catch (_) {
+        status.textContent = 'Mode hors ligne non vérifié';
+      }
+    }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('controllerchange', verifyOfflineAudio);
+      window.addEventListener('pageshow', verifyOfflineAudio);
+    }
+    verifyOfflineAudio();
+    if ('serviceWorker'  in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+      navigator.serviceWorker.register('./sw.js').catch(err => console.warn('Mode hors-ligne non actif :', err));
+    }
+  </script>
+</body>
+</html>

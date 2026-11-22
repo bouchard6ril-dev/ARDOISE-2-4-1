@@ -1,0 +1,1 @@
+ARDOISE autonome : 28 fichiers Augustin. Pour iPhone/iPad hors ligne, publier ce dossier sur un site HTTPS (par exemple GitHub Pages), l’ouvrir dans Safari, attendre le telechargement du cache, ajouter a l’ecran d’accueil puis tester en mode avion. Le lien local http://IP:8765 ne permet pas l’installation hors ligne iOS.
