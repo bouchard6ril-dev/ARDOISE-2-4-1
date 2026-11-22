@@ -2831,10 +2831,10 @@
         }
       }
 
-      // Limite les reconstructions SVG sur mobile à ~25 images/s.
+      // Limite les reconstructions SVG sur mobile à ~15 images/s pour laisser Safari gérer les touches.
       // Lors d'une attente audio, le terrain reste identique : inutile de rerendre.
       if (state.lastRenderedProgress !== state.progress &&
-          (state.lastRenderTs === undefined || ts - state.lastRenderTs >= 40 || state.progress >= 1)) {
+          (state.lastRenderTs === undefined || ts - state.lastRenderTs >= 66 || state.progress >= 1)) {
         renderPitch();
         state.lastRenderTs = ts;
         state.lastRenderedProgress = state.progress;
@@ -3360,6 +3360,34 @@
       }
     }
 
+    /* iOS V4 : pont tactile explicite pour boutons HTML.
+       Certains Safari peuvent perdre le click synthetique lors des animations SVG.
+       touchend est traite dans le geste utilisateur; preventDefault evite le second click.
+       Ne change pas les selecteurs, sliders ou gestes de deplacement. */
+    (function installMobileTouchBridge() {
+      if (!('ontouchstart' in window)) return;
+      let start = null;
+      document.addEventListener('touchstart', function (event) {
+        if (event.touches.length !== 1) { start = null; return; }
+        const t = event.touches[0];
+        start = {x:t.clientX, y:t.clientY, time:Date.now()};
+      }, {capture:true, passive:true});
+      document.addEventListener('touchend', function (event) {
+        if (!start || event.changedTouches.length !== 1) return;
+        const t=event.changedTouches[0], initial=start;start=null;
+        if(Math.hypot(t.clientX-initial.x,t.clientY-initial.y)>14 || Date.now()-initial.time>900) return;
+        const raw=event.target;
+        const button=raw && raw.closest && raw.closest('button');
+        if (!button || button.disabled || !document.contains(button)) return;
+        // Use elementFromPoint for overlays: only respond when touch actually reaches button.
+        const at=document.elementFromPoint(t.clientX,t.clientY);
+        if (!at || !(button===at || button.contains(at))) return;
+        event.preventDefault();
+        button.click();
+      }, {capture:true, passive:false});
+      document.addEventListener('touchcancel', () => {start=null;},{capture:true,passive:true});
+    })();
+
     /* Keyboard shortcut: Space for Play/Pause outside inputs */
     window.addEventListener(`keydown`, ev => {
       const tag = (ev.target && ev.target.tagName) ? ev.target.tagName.toLowerCase() : ``;
@@ -3422,7 +3450,7 @@
       }
       try {
         const manifest = await fetch('./narrations.json').then(r => r.json());
-        const cache = await caches.open('ardoise-augustin-autonome-v2');
+        const cache = await caches.open('ardoise-augustin-autonome-v4');
         let ready = 0;
         for (const item of manifest.items) {
           if (await cache.match('./' + item.file)) ready++;
