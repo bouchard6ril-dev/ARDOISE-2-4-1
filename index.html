@@ -1021,8 +1021,10 @@
     }
     /* iOS : commandes accessibles et tactiles pendant lecture */
     .controls-row button, .controls-row select { min-height: 44px; touch-action: manipulation; }
-    #timeline-scrubber { touch-action: pan-y; }
+    #timeline-scrubber { touch-action: auto; }
+    .controls-row, .cue-ticks { position: relative; z-index: 2; }
   </style>
+  <!-- Correctif commandes iOS V2 - 2026-11-22 -->
 </head>
 <body>
   <div class="page-grid">
@@ -2264,6 +2266,7 @@
       notesBySeq: {},
       lastCueIndex: -1,
       rafId: null,
+      playbackEpoch: 0,
       lastFrameTs: null,
       voices: [],
 
@@ -2764,8 +2767,8 @@
 
     /* Animation Loop */
   
-    function animationStep(ts) {
-      if (!state.isPlaying) return;
+    function animationStep(ts, epoch) {
+      if (!state.isPlaying || epoch !== state.playbackEpoch) return;
 
       if (state.lastFrameTs === null) {
         state.lastFrameTs = ts;
@@ -2838,12 +2841,14 @@
       }
 
       // Continuer l'animation
-      state.rafId = requestAnimationFrame(animationStep);
+      state.rafId = requestAnimationFrame(t => animationStep(t, epoch));
     }
 
     function startPlayback() {
       primeMobileAudio();
       if (state.freeboardMode) toggleFreeboard(false);
+      state.playbackEpoch++;
+      const epoch = state.playbackEpoch;
       state.isPlaying = true;
       state.lastFrameTs = null;
       state.lastRenderTs = undefined;
@@ -2855,10 +2860,11 @@
       syncCueHighlight(seq, cueIdx);
       if (state.voiceEnabled) speakText(seq.cues[cueIdx].speech);
       if (state.rafId) cancelAnimationFrame(state.rafId);
-      state.rafId = requestAnimationFrame(animationStep);
+      state.rafId = requestAnimationFrame(t => animationStep(t, epoch));
     }
 
     function pausePlayback() {
+      state.playbackEpoch++;
       state.isPlaying = false;
       state.lastFrameTs = null;
       if (state.rafId) {
@@ -2884,15 +2890,17 @@
       else startPlayback();
     }
 
-    function prevSequence() {
-      const idx = state.currentSeqIndex > 0 ? state.currentSeqIndex - 1 : SEQUENCES.length - 1;
-      selectSequence(idx, state.isPlaying);
+    // iOS : navigation atomique pendant la lecture.
+    // Le choix de sequence et la nouvelle narration se font dans le meme geste utilisateur.
+    function navigateSequence(delta) {
+      const resume = state.isPlaying;
+      const target = (state.currentSeqIndex + delta + SEQUENCES.length) % SEQUENCES.length;
+      selectSequence(target, false);
+      if (resume) startPlayback();
     }
 
-    function nextSequence() {
-      const idx = state.currentSeqIndex < SEQUENCES.length - 1 ? state.currentSeqIndex + 1 : 0;
-      selectSequence(idx, state.isPlaying);
-    }
+    function prevSequence() { navigateSequence(-1); }
+    function nextSequence() { navigateSequence(1); }
 
     function setPlaybackSpeed(val) {
       state.speed = parseFloat(val) || 1;
@@ -3414,7 +3422,7 @@
       }
       try {
         const manifest = await fetch('./narrations.json').then(r => r.json());
-        const cache = await caches.open('ardoise-augustin-autonome-v1');
+        const cache = await caches.open('ardoise-augustin-autonome-v2');
         let ready = 0;
         for (const item of manifest.items) {
           if (await cache.match('./' + item.file)) ready++;
